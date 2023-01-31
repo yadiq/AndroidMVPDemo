@@ -87,13 +87,12 @@ public class MultiLanguageUtil {
             Log.e(TAG, "No context, MultiLanguageUtil will not work!");
             return;
         }
-        Context appContext = context.getApplicationContext();
-        Locale targetLocale = getLanguageLocale(appContext);
+        Locale targetLocale = getLanguageLocale(context);
         Locale.setDefault(targetLocale);
-        Configuration configuration = appContext.getResources().getConfiguration();
+        Configuration configuration = context.getResources().getConfiguration();
         configuration.setLocale(targetLocale);
         context.createConfigurationContext(configuration);
-        Resources resources = appContext.getResources();
+        Resources resources = context.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         resources.updateConfiguration(configuration, dm);//语言更换生效的代码!
     }
@@ -102,7 +101,7 @@ public class MultiLanguageUtil {
     private static Context updateResources(Context context) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = getInstance().getLanguageLocale(context);
+        Locale locale = MultiLanguageUtil.getInstance().getLanguageLocale(context);
         LocaleList localeList = new LocaleList(locale);
         LocaleList.setDefault(localeList);
         configuration.setLocales(localeList);
