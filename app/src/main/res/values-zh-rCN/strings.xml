@@ -17,11 +17,11 @@
     <string name="permission_install_failed_message">请您授予安装未知应用权限，否则无法安装app</string>
 
     <!--网络请求报错-->
-    <string name="network_error">网络错误</string>
-    <string name="network_parse_error">解析错误</string>
-    <string name="network_connect_error">网络连接失败</string>
-    <string name="network_ssl_error">证书验证失败</string>
-    <string name="network_connect_timeout">连接超时</string>
-    <string name="network_unknown_error">未知错误…</string>
+    <string name="network_error">Network error</string>
+    <string name="network_parse_error">Parse error</string>
+    <string name="network_connect_error">Network connection failed</string>
+    <string name="network_ssl_error">Certificate verification failed</string>
+    <string name="network_connect_timeout">Connection timed out</string>
+    <string name="network_unknown_error">Unknown error…</string>
 
 </resources>

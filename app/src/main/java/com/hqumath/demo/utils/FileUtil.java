@@ -26,7 +26,7 @@ import okhttp3.ResponseBody;
  */
 public class FileUtil {
     /**
-     * 获取应用专属内部存储文件 /data/user/0/pacakge/files
+     * 获取应用专属内部存储文件(无需权限) /data/user/0/pacakge/files
      *
      * @param dirName  父文件名
      * @param fileName 子文件名
@@ -43,7 +43,7 @@ public class FileUtil {
     }
 
     /**
-     * 获取应用专属内部存储文件-缓存 /data/user/0/pacakge/cache
+     * 获取应用专属内部存储文件-缓存(无需权限) /data/user/0/pacakge/cache
      *
      * @param fileName 文件名
      */
@@ -53,7 +53,7 @@ public class FileUtil {
     }
 
     /**
-     * 获取应用专属外部存储空间文件 /storage/emulated/0/Android/data/packname/files
+     * 获取应用专属外部存储空间文件(无需权限) /storage/emulated/0/Android/data/packname/files
      * 并检查sd卡是否可用
      *
      * @param dirName  父文件名
@@ -69,7 +69,7 @@ public class FileUtil {
     }
 
     /**
-     * 获取应用专属外部存储空间文件-缓存 /storage/emulated/0/Android/data/packname/cache
+     * 获取应用专属外部存储空间文件-缓存(无需权限) /storage/emulated/0/Android/data/packname/cache
      * 并检查sd卡是否可用
      *
      * @param fileName 子文件名
@@ -85,7 +85,7 @@ public class FileUtil {
     }
 
     /**
-     * 获取外部存储空间根目录 /storage/emulated/0/dirname/filename
+     * 获取外部存储空间根目录(API29后废弃) /storage/emulated/0/dirname/filename
      *
      * @param dirName  父文件名
      * @param fileName 子文件名
