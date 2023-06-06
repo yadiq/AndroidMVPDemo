@@ -11,6 +11,8 @@ import com.hqumath.demo.app.Constant;
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.bean.UserInfoEntity;
 import com.hqumath.demo.databinding.ActivityLoginBinding;
+import com.hqumath.demo.databinding.DialogLoginSuccessBinding;
+import com.hqumath.demo.dialog.LoginSuccessDialog;
 import com.hqumath.demo.utils.CommonUtil;
 import com.hqumath.demo.utils.SPUtil;
 
@@ -106,7 +108,16 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginC
     @Override
     public void onLoginSuccess(Object object) {
         UserInfoEntity user = (UserInfoEntity) object;
-        CommonUtil.toast(user.getName() + "已登录");
+        //CommonUtil.toast(user.getName() + "已登录");
+        LoginSuccessDialog dialog = new LoginSuccessDialog(this, new LoginSuccessDialog.ClickCallBack() {
+            @Override
+            public void onConfirm() {
+                CommonUtil.toast(user.getName() + "已登录");
+            }
+        });
+        dialog.show();
+
+        binding.btnLogin.setEnabled(true);
     }
 
     @Override
