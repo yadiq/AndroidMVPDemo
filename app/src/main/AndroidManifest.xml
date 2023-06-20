@@ -29,9 +29,17 @@
             android:name="design_width_in_dp"
             android:value="360" />
 
+        <!--configChanges写全
+        "orientation"	屏幕方向改变了
+        "screenSize"	屏幕大小改变了
+        "screenLayout"	屏幕的显示发生了变化
+        "navigation"	导航发生了变化
+        "keyboard"	键盘发生了改变
+        "keyboardHidden"	键盘的可用性发生了改变-->
+
         <activity
             android:name="com.hqumath.demo.ui.login.LoginActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:configChanges="orientation|screenSize|screenLayout|navigation|keyboard|keyboardHidden"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
