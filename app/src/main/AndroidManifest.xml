@@ -28,18 +28,21 @@
         <meta-data
             android:name="design_width_in_dp"
             android:value="360" />
-
+        
         <!--configChanges写全
-        "orientation"	屏幕方向改变了
-        "screenSize"	屏幕大小改变了
-        "screenLayout"	屏幕的显示发生了变化
-        "navigation"	导航发生了变化
-        "keyboard"	键盘发生了改变
-        "keyboardHidden"	键盘的可用性发生了改变-->
+        "orientation" 屏幕方向改变
+        "screenSize" 屏幕大小改变
+        "smallestScreenSize" 物理屏幕尺寸发生变更
+        "screenLayout" 屏幕的显示发生变化
+        "navigation" 导航发生了变化
+        "keyboard" 键盘发生了改变
+        "keyboardHidden" 键盘的可用性发生了改变
+        "touchscreen"	触摸屏改变
+        "fontScale"	字体比例发生变化-->
 
         <activity
             android:name="com.hqumath.demo.ui.login.LoginActivity"
-            android:configChanges="orientation|screenSize|screenLayout|navigation|keyboard|keyboardHidden"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
