@@ -2,6 +2,7 @@ package com.hqumath.demo.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -95,4 +96,31 @@ public class CommonUtil {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue,
                 context.getResources().getDisplayMetrics());
     }
+
+    /**
+     * app退出后杀死当前进程
+     * 解决问题：glide缓存问题 gstreamer释放问题
+     */
+    public static void killProgress() {
+        String packageName = context.getPackageName();
+        LogUtil.d("killProgress: " + packageName);
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        try {
+            am.killBackgroundProcesses(packageName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /********防止按钮连续点击********/
+    private static long lastClickTime;
+    public synchronized static boolean isFastClick() {
+        long time = System.currentTimeMillis();
+        if (time - lastClickTime < 500) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
 }
+

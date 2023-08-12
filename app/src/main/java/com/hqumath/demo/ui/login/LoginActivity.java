@@ -1,20 +1,19 @@
 package com.hqumath.demo.ui.login;
 
-import android.content.Intent;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
 import com.hqumath.demo.R;
-import com.hqumath.demo.app.Constant;
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.bean.UserInfoEntity;
 import com.hqumath.demo.databinding.ActivityLoginBinding;
-import com.hqumath.demo.databinding.DialogLoginSuccessBinding;
 import com.hqumath.demo.dialog.LoginSuccessDialog;
 import com.hqumath.demo.utils.CommonUtil;
-import com.hqumath.demo.utils.SPUtil;
+import com.hqumath.demo.utils.LogUtil;
 
 /**
  * ****************************************************************
@@ -68,6 +67,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginC
             mPresenter = null;
         }
         super.onDestroy();
+        CommonUtil.killProgress();
     }
 
     /**
