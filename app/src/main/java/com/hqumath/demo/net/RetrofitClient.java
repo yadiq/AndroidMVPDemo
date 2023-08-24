@@ -3,6 +3,7 @@ package com.hqumath.demo.net;
 import com.hqumath.demo.app.Constant;
 import com.hqumath.demo.net.download.DownloadInterceptor;
 import com.hqumath.demo.net.download.DownloadListener;
+import com.hqumath.demo.utils.SSLSocketClient;
 
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -86,5 +87,25 @@ public class RetrofitClient {
                 .baseUrl(Constant.baseUrl)//使用哪个域名都可以
                 .build();
         return retrofit.create(ApiService.class);
+    }
+
+
+    /*APP中代码
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.12.0"
+    Glide.get(this).getRegistry().replace(GlideUrl .class, InputStream .class,
+        new OkHttpUrlLoader.Factory(RetrofitClient.getInstance().getGlideOkHttpClient()));*/
+
+    /**
+     * Glide忽略证书替换OkHttp
+     */
+    public OkHttpClient getGlideOkHttpClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(connectTimeout, TimeUnit.SECONDS);
+        builder.readTimeout(readTimeout, TimeUnit.SECONDS);
+        builder.writeTimeout(writeTimeout, TimeUnit.SECONDS);
+        builder.protocols(Collections.singletonList(Protocol.HTTP_1_1));//不使用http/2
+        builder.sslSocketFactory(SSLSocketClient.getSSLSocketFactory());//忽略证书
+        builder.hostnameVerifier(SSLSocketClient.getHostnameVerifier());//忽略证书
+        return builder.build();
     }
 }
