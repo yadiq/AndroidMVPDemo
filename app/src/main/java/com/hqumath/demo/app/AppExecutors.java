@@ -83,7 +83,7 @@ public class AppExecutors {
 
     public ExecutorService workThread() {
         if (workThread == null || workThread.isShutdown())
-            workThread = Executors.newFixedThreadPool(8);//骁龙888八个CPU核心
+            workThread = Executors.newFixedThreadPool(8);
         return workThread;
     }
 

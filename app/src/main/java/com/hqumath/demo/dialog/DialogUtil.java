@@ -1,4 +1,4 @@
-package com.hqumath.demo.utils;
+package com.hqumath.demo.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -35,14 +35,10 @@ public class DialogUtil extends Dialog {
      * 默认主要操作弹窗
      */
     public DialogUtil(Context context) {
-        this(context, R.style.dialog_common, R.layout.dialog_common);//根布局会被改为自适应宽高,居中
-    }
-
-    public DialogUtil(Context context, int theme, int messageLayout) {
-        super(context, theme);
+        super(context, R.style.dialog_common);
         this.mContext = context;
         binding = DialogCommonBinding.inflate(LayoutInflater.from(mContext));
-        setContentView(binding.getRoot());
+        setContentView(binding.getRoot());//根布局会被改为自适应宽高,居中
         //根布局为自适应宽高，有软键盘时必须全屏，否则mate40等手机软键盘无法上推
         /*Window window = getWindow();
         if (window != null) {
