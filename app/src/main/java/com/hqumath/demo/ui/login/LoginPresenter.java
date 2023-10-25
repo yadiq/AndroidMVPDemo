@@ -17,9 +17,9 @@ import com.hqumath.demo.repository.MyModel;
 public class LoginPresenter extends BasePresenter<LoginPresenter.LoginContract> {
 
     public interface LoginContract {
-        void showProgress();
+        void showLoading();
 
-        void hideProgress();
+        void dismissLoading();
 
         void onLoginSuccess(Object object);
 
@@ -32,20 +32,20 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.LoginContract> 
 
     public void login(String userName, String passWord) {
         if (mView == null) return;
-        mView.showProgress();
+        mView.showLoading();
         //模拟登陆接口
         ((MyModel) mModel).login(userName, passWord, new HttpListener() {
             @Override
             public void onSuccess(Object object) {
                 if (mView == null) return;
-                mView.hideProgress();
+                mView.dismissLoading();
                 mView.onLoginSuccess(object);
             }
 
             @Override
             public void onError(String errorMsg, String code) {
                 if (mView == null) return;
-                mView.hideProgress();
+                mView.dismissLoading();
                 mView.onLoginError(errorMsg, code);
             }
         });

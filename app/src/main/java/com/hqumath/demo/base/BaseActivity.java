@@ -52,17 +52,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initData();
 
-    protected void showProgressDialog(String content) {
+    public void showLoading() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(mContext);
-            mProgressDialog.setCancelable(true);
+            mProgressDialog.setMessage("loading");
         }
-        mProgressDialog.setMessage(content);
-        mProgressDialog.show();
+        if (!mProgressDialog.isShowing())
+            mProgressDialog.show();
     }
 
-    protected void dismissProgressDialog() {
-        if (mProgressDialog != null) {
+    public void dismissLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
     }

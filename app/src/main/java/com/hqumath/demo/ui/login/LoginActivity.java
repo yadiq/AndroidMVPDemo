@@ -1,7 +1,5 @@
 package com.hqumath.demo.ui.login;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,9 +9,8 @@ import com.hqumath.demo.R;
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.bean.UserInfoEntity;
 import com.hqumath.demo.databinding.ActivityLoginBinding;
-import com.hqumath.demo.dialog.LoginSuccessDialog;
+import com.hqumath.demo.dialog.DialogUtil;
 import com.hqumath.demo.utils.CommonUtil;
-import com.hqumath.demo.utils.LogUtil;
 
 /**
  * ****************************************************************
@@ -96,28 +93,15 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginC
     }
 
     @Override
-    public void showProgress() {
-        showProgressDialog("loading");
-    }
-
-    @Override
-    public void hideProgress() {
-        dismissProgressDialog();
-    }
-
-    @Override
     public void onLoginSuccess(Object object) {
         UserInfoEntity user = (UserInfoEntity) object;
-        //CommonUtil.toast(user.getName() + "已登录");
-        LoginSuccessDialog dialog = new LoginSuccessDialog(this, new LoginSuccessDialog.ClickCallBack() {
-            @Override
-            public void onConfirm() {
-                CommonUtil.toast(user.getName() + "已登录");
-            }
-        });
-        dialog.show();
-
         binding.btnLogin.setEnabled(true);
+
+        DialogUtil dialog = new DialogUtil(mContext);
+        dialog.setTitle("提示");
+        dialog.setMessage("登录成功");
+        dialog.setOneConfirmBtn("确定", v -> CommonUtil.toast(user.getName() + "已登录"));
+        dialog.show();
     }
 
     @Override
