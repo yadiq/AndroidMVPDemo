@@ -6,7 +6,6 @@ import com.hqumath.demo.R;
 import com.hqumath.demo.base.BaseRecyclerAdapter;
 import com.hqumath.demo.base.BaseRecyclerViewHolder;
 import com.hqumath.demo.bean.ReposEntity;
-import com.hqumath.demo.bean.UserInfoEntity;
 
 import java.util.List;
 

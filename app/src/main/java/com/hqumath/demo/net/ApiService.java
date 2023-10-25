@@ -1,7 +1,6 @@
 package com.hqumath.demo.net;
 
 import com.hqumath.demo.bean.ReposEntity;
-import com.hqumath.demo.bean.UserInfoEntity;
 
 import java.util.List;
 
