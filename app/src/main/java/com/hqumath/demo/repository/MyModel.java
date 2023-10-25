@@ -1,10 +1,8 @@
 package com.hqumath.demo.repository;
 
-import com.hqumath.demo.app.Constant;
 import com.hqumath.demo.base.BaseModel;
 import com.hqumath.demo.net.HttpListener;
 import com.hqumath.demo.net.RetrofitClient;
-import com.hqumath.demo.utils.SPUtil;
 
 /**
  * ****************************************************************
