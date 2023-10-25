@@ -6,6 +6,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.TypedValue;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 /**
  * 常用工具类
@@ -53,6 +55,10 @@ public class CommonUtil {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
 
+    public static void toast(@StringRes int resId) {
+        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+    }
+
     public static void showKeyboard(Activity activity, EditText editText) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(editText, 0);
@@ -73,6 +79,14 @@ public class CommonUtil {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
         return info != null && info.isAvailable();
+    }
+
+    /**
+     * 检查是否开启定位
+     */
+    public static boolean isGpsOpen() {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     //获取软件版本号
@@ -101,6 +115,7 @@ public class CommonUtil {
      * app退出后杀死当前进程
      * 解决问题：glide缓存问题 gstreamer释放问题
      */
+    @SuppressLint("MissingPermission")
     public static void killProgress() {
         String packageName = context.getPackageName();
         LogUtil.d("killProgress: " + packageName);
