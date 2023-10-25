@@ -54,4 +54,7 @@ dependencies {
     implementation 'com.yanzhenjie:permission:2.0.3'
     //屏幕适配
     implementation 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
+    //下拉刷新
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
 }

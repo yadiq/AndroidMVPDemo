@@ -19,13 +19,11 @@ import com.hqumath.demo.utils.SPUtil;
  * ****************************************************************
  */
 public class MyModel extends BaseModel {
-    //模拟登陆接口
-    public void login(String userName, String passWord, HttpListener listener) {
-        sendRequest(RetrofitClient.getInstance().getApiService().getUserInfo(userName), new HttpListener() {
+
+    public void getMyRepos(String userName, int pageSize, long pageIndex, HttpListener listener) {
+        sendRequest(RetrofitClient.getInstance().getApiService().getMyRepos(userName, pageSize, pageIndex), new HttpListener() {
             @Override
             public void onSuccess(Object object) {
-                //数据校验、处理
-                SPUtil.getInstance().put(Constant.USER_NAME, userName);
                 listener.onSuccess(object);
             }
 

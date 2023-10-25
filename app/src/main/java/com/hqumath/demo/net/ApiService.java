@@ -1,10 +1,14 @@
 package com.hqumath.demo.net;
 
+import com.hqumath.demo.bean.ReposEntity;
 import com.hqumath.demo.bean.UserInfoEntity;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * ****************************************************************
@@ -17,8 +21,8 @@ import retrofit2.http.Path;
  * ****************************************************************
  */
 public interface ApiService {
+    //获取用户仓库
+    @GET("users/{userName}/repos")
+    Observable<List<ReposEntity>> getMyRepos(@Path("userName") String userName, @Query("per_page") int per_page, @Query("page") long page);
 
-    //获取用户信息
-    @GET("users/{userName}")
-    Observable<UserInfoEntity> getUserInfo(@Path("userName") String userName);
 }

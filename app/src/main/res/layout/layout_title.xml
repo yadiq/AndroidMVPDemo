@@ -43,7 +43,7 @@
             android:adjustViewBounds="true"
             android:paddingLeft="19dp"
             android:paddingRight="19dp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvRight"

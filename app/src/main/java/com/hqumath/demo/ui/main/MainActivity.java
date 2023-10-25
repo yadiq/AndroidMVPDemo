@@ -6,13 +6,13 @@ import android.view.View;
 
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.databinding.ActivityMainBinding;
-import com.hqumath.demo.ui.login.LoginActivity;
+import com.hqumath.demo.ui.repos.MyReposActivity;
 
 /**
  * ****************************************************************
  * 作    者: Created by gyd
  * 创建时间: 2023/10/25 9:35
- * 文件描述:
+ * 文件描述: 主界面
  * 注意事项:
  * ****************************************************************
  */
@@ -27,8 +27,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        binding.btnLogin.setOnClickListener(v -> {
-            startActivity(new Intent(mContext, LoginActivity.class));
+        binding.btnMyRepos.setOnClickListener(v -> {
+            startActivity(new Intent(mContext, MyReposActivity.class));
         });
     }
 
