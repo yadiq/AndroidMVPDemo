@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import com.hqumath.demo.utils.CommonUtil;
 import com.hqumath.demo.utils.MultiLanguageUtil;
 
@@ -95,12 +97,14 @@ public class App extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(base));//多语言
+        //Application Resources 多语言设置
+        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(base));
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        MultiLanguageUtil.getInstance().setConfiguration(getApplicationContext());//多语言
+        //系统资源配置发生更改，例如主题模式，需要重新刷新多语言
+        MultiLanguageUtil.attachBaseContext(this);
     }
 }

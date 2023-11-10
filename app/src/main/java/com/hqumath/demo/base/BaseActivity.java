@@ -43,7 +43,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase));//多语言
+        //Activity Resources 多语言设置
+        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(newBase));
     }
 
     protected abstract View initContentView(Bundle savedInstanceState);

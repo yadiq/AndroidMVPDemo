@@ -18,7 +18,7 @@ public class SPUtil {
     private static SPUtil helper;
     private SharedPreferences sp;
 
-    public static SPUtil getInstance(Context context) {
+    public static SPUtil getInstance(Context context) {//未初始化CommonUtil时使用
         if (helper == null) {
             helper = new SPUtil(context);
         }

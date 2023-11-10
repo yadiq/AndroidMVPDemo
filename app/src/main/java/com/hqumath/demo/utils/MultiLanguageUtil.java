@@ -1,13 +1,13 @@
 package com.hqumath.demo.utils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
-import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.hqumath.demo.app.Constant;
 
@@ -18,13 +18,10 @@ import java.util.Locale;
  */
 public class MultiLanguageUtil {
 
-    public class LanguageType {
-        public static final int LANGUAGE_EN = 0;    //英文
-        public static final int LANGUAGE_CHINESE_SIMPLIFIED = 1; //简体中文
-        public static final int LANGUAGE_CHINESE_TRADITIONAL = 2;  //繁体中文
-    }
+    public static final int LANGUAGE_EN = 0;    //英文
+    public static final int LANGUAGE_CHINESE_SIMPLIFIED = 1; //简体中文
+    public static final int LANGUAGE_CHINESE_TRADITIONAL = 2;  //繁体中文
 
-    private static final String TAG = "MultiLanguageUtil";
     private static MultiLanguageUtil instance;
 
     public static MultiLanguageUtil getInstance() {
@@ -38,74 +35,71 @@ public class MultiLanguageUtil {
         return instance;
     }
 
-    private MultiLanguageUtil() {
-    }
-
     /**
-     * 如果不是英文、简体中文、繁体中文，默认返回简体中文
+     * 获取本地存储的语言
      *
      * @return
      */
-    public Locale getLanguageLocale(Context context) {
-        int languageType = SPUtil.getInstance(context).getInt(Constant.LANGUAGE, LanguageType.LANGUAGE_EN);
+    public static Locale getLanguageLocale(Context context) {
+        int languageType = SPUtil.getInstance(context).getInt(Constant.LANGUAGE, LANGUAGE_EN);
         Locale locale = Locale.ENGLISH;
-        if (languageType == LanguageType.LANGUAGE_EN) {
+        if (languageType == LANGUAGE_EN) {
             locale = Locale.ENGLISH;
-        } else if (languageType == LanguageType.LANGUAGE_CHINESE_SIMPLIFIED) {
+        } else if (languageType == LANGUAGE_CHINESE_SIMPLIFIED) {
             locale = Locale.SIMPLIFIED_CHINESE;
-        } else if (languageType == LanguageType.LANGUAGE_CHINESE_TRADITIONAL) {
+        } else if (languageType == LANGUAGE_CHINESE_TRADITIONAL) {
             locale = Locale.TRADITIONAL_CHINESE;
         }
         return locale;
     }
 
     /**
-     * 更新语言
+     * 设置语言
      *
      * @param context
      * @param languageType
      */
-    public void updateLanguage(Context context, int languageType) {
+    public static void updateLanguage(Context context, int languageType) {
         SPUtil.getInstance(context).put(Constant.LANGUAGE, languageType);
-        setConfiguration(context);
-    }
-
-    public static Context attachBaseContext(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context);
-        } else {
-            MultiLanguageUtil.getInstance().setConfiguration(context);
-            return context;
-        }
+        //更新Application Resources。只有ApplicationContext updateConfiguration才生效
+        Locale locale = getLanguageLocale(context);
+        updateConfiguration(context.getApplicationContext(), locale);
     }
 
     /**
-     * 设置语言
+     * 多语言切换，Application/Service/Activity Resources
+     *
+     * @param context
+     * @return
      */
-    public void setConfiguration(Context context) {
-        if (context == null) {
-            Log.e(TAG, "No context, MultiLanguageUtil will not work!");
-            return;
+    public static Context attachBaseContext(Context context) {
+        Locale locale = getLanguageLocale(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            return createConfigurationContext(context, locale);
+        } else {
+            return updateConfiguration(context, locale);
         }
-        Locale targetLocale = getLanguageLocale(context);
-        Locale.setDefault(targetLocale);
-        Configuration configuration = context.getResources().getConfiguration();
-        configuration.setLocale(targetLocale);
-        context.createConfigurationContext(configuration);
-        Resources resources = context.getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        resources.updateConfiguration(configuration, dm);//语言更换生效的代码!
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(Context context) {
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
+    private static Context createConfigurationContext(Context context, Locale locale) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = MultiLanguageUtil.getInstance().getLanguageLocale(context);
         LocaleList localeList = new LocaleList(locale);
-        LocaleList.setDefault(localeList);
         configuration.setLocales(localeList);
-        configuration.setLocale(locale);
         return context.createConfigurationContext(configuration);
+    }
+
+    private static Context updateConfiguration(Context context, Locale locale) {
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration.setLocales(new LocaleList(locale));
+        } else {
+            configuration.setLocale(locale);//This field was deprecated in API level 24
+        }
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        resources.updateConfiguration(configuration, dm);//This method was deprecated in API level 25
+        return context;
     }
 }
