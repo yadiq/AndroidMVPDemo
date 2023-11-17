@@ -82,9 +82,9 @@ public class MultiLanguageUtil {
             configuration.setLocales(new LocaleList(locale));
         }
         configuration.setLocale(locale);
-        context.createConfigurationContext(configuration);//api>=25
+        Context newContext = context.createConfigurationContext(configuration);//api>=25
         DisplayMetrics dm = resources.getDisplayMetrics();
         resources.updateConfiguration(configuration, dm);
-        return context;
+        return newContext;
     }
 }
