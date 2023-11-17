@@ -61,6 +61,20 @@ public class App extends Application {
                 });
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        //多语言设置
+        Context context = MultiLanguageUtil.updateConfiguration(base);
+        super.attachBaseContext(context);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //当资源配置发生更改时，例如横竖屏切换，需要重新设置多语言
+        MultiLanguageUtil.updateConfiguration(this);
+    }
+
     private ActivityLifecycleCallbacks activityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
 
         @Override
@@ -94,17 +108,4 @@ public class App extends Application {
             AppManager.getInstance().removeActivity(activity);
         }
     };
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        //Application Resources 多语言设置
-        super.attachBaseContext(MultiLanguageUtil.attachBaseContext(base));
-    }
-
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //系统资源配置发生更改，例如主题模式，需要重新刷新多语言
-        MultiLanguageUtil.attachBaseContext(this);
-    }
 }

@@ -15,12 +15,15 @@ import java.util.Locale;
 
 /**
  * 多语言切换的帮助类
+ * 注意：appcompat版本需1.3.0及以上
+ * 修改App和BaseActivity
  */
 public class MultiLanguageUtil {
 
     public static final int LANGUAGE_EN = 0;    //英文
     public static final int LANGUAGE_CHINESE_SIMPLIFIED = 1; //简体中文
     public static final int LANGUAGE_CHINESE_TRADITIONAL = 2;  //繁体中文
+    public static String[] languageNames = {"English", "简体中文"};
 
     private static MultiLanguageUtil instance;
 
@@ -61,45 +64,27 @@ public class MultiLanguageUtil {
      */
     public static void updateLanguage(Context context, int languageType) {
         SPUtil.getInstance(context).put(Constant.LANGUAGE, languageType);
-        //更新Application Resources。只有ApplicationContext updateConfiguration才生效
-        Locale locale = getLanguageLocale(context);
-        updateConfiguration(context.getApplicationContext(), locale);
+        //更新系统资源配置
+        updateConfiguration(context.getApplicationContext());
     }
 
     /**
-     * 多语言切换，Application/Service/Activity Resources
+     * 多语言切换
      *
      * @param context
      * @return
      */
-    public static Context attachBaseContext(Context context) {
+    public static Context updateConfiguration(Context context) {
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
         Locale locale = getLanguageLocale(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            return createConfigurationContext(context, locale);
-        } else {
-            return updateConfiguration(context, locale);
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    private static Context createConfigurationContext(Context context, Locale locale) {
-        Resources resources = context.getResources();
-        Configuration configuration = resources.getConfiguration();
-        LocaleList localeList = new LocaleList(locale);
-        configuration.setLocales(localeList);
-        return context.createConfigurationContext(configuration);
-    }
-
-    private static Context updateConfiguration(Context context, Locale locale) {
-        Resources resources = context.getResources();
-        Configuration configuration = resources.getConfiguration();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             configuration.setLocales(new LocaleList(locale));
-        } else {
-            configuration.setLocale(locale);//This field was deprecated in API level 24
         }
+        configuration.setLocale(locale);
+        context.createConfigurationContext(configuration);//api>=25
         DisplayMetrics dm = resources.getDisplayMetrics();
-        resources.updateConfiguration(configuration, dm);//This method was deprecated in API level 25
+        resources.updateConfiguration(configuration, dm);
         return context;
     }
 }
