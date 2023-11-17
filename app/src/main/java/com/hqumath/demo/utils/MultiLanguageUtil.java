@@ -7,8 +7,6 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
-import androidx.annotation.RequiresApi;
-
 import com.hqumath.demo.app.Constant;
 
 import java.util.Locale;
@@ -23,20 +21,6 @@ public class MultiLanguageUtil {
     public static final int LANGUAGE_EN = 0;    //英文
     public static final int LANGUAGE_CHINESE_SIMPLIFIED = 1; //简体中文
     public static final int LANGUAGE_CHINESE_TRADITIONAL = 2;  //繁体中文
-    public static String[] languageNames = {"English", "简体中文"};
-
-    private static MultiLanguageUtil instance;
-
-    public static MultiLanguageUtil getInstance() {
-        if (instance == null) {
-            synchronized (MultiLanguageUtil.class) {
-                if (instance == null) {
-                    instance = new MultiLanguageUtil();
-                }
-            }
-        }
-        return instance;
-    }
 
     /**
      * 获取本地存储的语言
