@@ -32,12 +32,13 @@
         "navigation" 导航发生了变化
         "keyboard" 键盘发生了改变
         "keyboardHidden" 键盘的可用性发生了改变
-        "touchscreen"	触摸屏改变
-        "fontScale"	字体比例发生变化-->
+        "touchscreen" 触摸屏改变
+        "fontScale"	字体比例发生变化
+        "locale" 所在地区发生变化-->
 
         <activity
             android:name="com.hqumath.demo.ui.main.MainActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale|locale"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -49,7 +50,7 @@
 
         <activity
             android:name="com.hqumath.demo.ui.repos.MyReposActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale|locale"
             android:exported="false"
             android:screenOrientation="portrait" />
 
