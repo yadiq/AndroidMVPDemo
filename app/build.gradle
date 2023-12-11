@@ -1,16 +1,14 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
 
 android {
-    compileSdk 31
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.hqumath.demo"
-        minSdk 21
+        minSdkVersion 21
         //noinspection ExpiredTargetSdkVersion
         targetSdk 31
-        versionCode 20210902
+        targetSdkVersion 20210902
         versionName "2.1"
         //multiDexEnabled true
     }
