@@ -2,14 +2,9 @@ package com.hqumath.demo.app;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-
 import com.hqumath.demo.utils.CommonUtil;
-import com.hqumath.demo.utils.MultiLanguageUtil;
 
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.onAdaptListener;
@@ -61,7 +56,7 @@ public class App extends Application {
                 });
     }
 
-    @Override
+    /*@Override
     protected void attachBaseContext(Context base) {
         //多语言设置
         Context context = MultiLanguageUtil.updateConfiguration(base);
@@ -73,7 +68,7 @@ public class App extends Application {
         super.onConfigurationChanged(newConfig);
         //当资源配置发生更改时，例如横竖屏切换，需要重新设置多语言
         MultiLanguageUtil.updateConfiguration(this);
-    }
+    }*/
 
     private ActivityLifecycleCallbacks activityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
 

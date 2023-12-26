@@ -1,16 +1,11 @@
 package com.hqumath.demo.base;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.hqumath.demo.utils.MultiLanguageUtil;
 
 /**
  * ****************************************************************
@@ -37,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
-    @Override
+    /*@Override
     protected void attachBaseContext(Context newBase) {
         //多语言设置
         Context context = MultiLanguageUtil.updateConfiguration(newBase);
@@ -49,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         //当资源配置发生更改时，例如横竖屏切换，需要重新设置多语言
         MultiLanguageUtil.updateConfiguration(this);
-    }
+    }*/
 
     protected abstract View initContentView(Bundle savedInstanceState);
 
