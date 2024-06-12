@@ -42,25 +42,40 @@
 	(屏幕尺寸=对角线像素数/densitydpi=4.59英寸)
 4. 注意.xml文件预览仅支持部分densitydpi（例如：400 420 440 480等）
 
-## Gradle Plugin 插件版本 与 所需的最低 Gradle 构建工具版本 对应关系
-https://cloud.tencent.com/developer/article/2271801
-Gradle Plugin 插件在 Android Studio 工程根目录下的 build.gradle 构建脚本中配置
-Gradle 构建工具在工程根目录下的 gradle/wrapper/gradle-wrapper.properties 文件中配置
-GradlePlugin插件  Gradle构建工具
-7.3               7.4
-7.2               7.3.3
-7.1               7.2    #当前版本
-7.0               7.0
-4.2.0+            6.7.1
-下面是旧版本
-4.1.0+            6.5+
-4.0.0+            6.1.1+
-3.6.0 - 3.6.4     5.6.4+
-3.5.0 - 3.5.4     5.4.1+
-3.4.0 - 3.4.3     5.1.1+
-3.3.0 - 3.3.3     4.10.1+
 
-AndroidStudio版本 GradlePlugin插件
+## AGP与gradle、JDK、AS等版本的对应关系
+
+1. 概念 
++ AGP (Android Gradle Plugin)
+在 Android Studio 工程根目录下的 build.gradle 构建脚本中配置
++ Gradle (构建工具) 
+在工程根目录下的 gradle/wrapper/gradle-wrapper.properties 文件中配置
+
+
+2. AGP与Gradle、JDK 的版本对应关系
+https://developer.android.google.cn/build/releases/gradle-plugin?hl=zh-cn#updating-gradle
+https://blog.csdn.net/fxjzzyo/article/details/134390809
+   AGP              最小Gradle  最小JDK
+   8.4	             8.6	    17
+   8.3	             8.4     	17
+   8.2            	 8.2	    17
+   8.1	             8.0	    17
+   8.0.0	         8.0	    17
+   7.4.0	         7.5	    11
+   7.3               7.4        11
+   7.2               7.3.3      11
+   7.1               7.2        11   
+   7.0               7.0        11
+   4.2.0             6.7.1       8  #当前选择
+   4.1.0             6.5+        8
+   4.0.0             6.1.1+      8
+   3.6.0 - 3.6.4     5.6.4+      8
+   3.5.0 - 3.5.4     5.4.1+      8
+   3.4.0 - 3.4.3     5.1.1+      8
+   3.3.0 - 3.3.3     4.10.1+     7
+
+3. AS与AGP版本关系
+AndroidStudio          AGP
 Koala | 2024.1.1       3.2-8.5
 Jellyfish | 2023.3.1   3.2-8.4 稳定版本
 Iguana | 2023.2.1	   3.2-8.3
