@@ -63,7 +63,8 @@ public class RetrofitClient {
             builder.addInterceptor(new LogInterceptor());//自定义拦截器（token过期后刷新token，打印日志）
             Retrofit retrofit = new Retrofit.Builder()
                     .client(builder.build())
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())//返回数据转换器-Gson
+                    //.addConverterFactory(ScalarsConverterFactory.create())//返回数据转换器-String
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(Constants.baseUrl)
                     .build();

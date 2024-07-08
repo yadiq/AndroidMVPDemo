@@ -45,7 +45,8 @@ dependencies {
     //network
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//数据解析器
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//返回数据转换器-Gson
+    //implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'//返回数据转换器-String
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
     //权限获取
     implementation 'com.yanzhenjie:permission:2.0.3'
