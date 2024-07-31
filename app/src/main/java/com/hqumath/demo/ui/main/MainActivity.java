@@ -37,7 +37,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        boolean isSafe = !EmulatorCheckUtil.readSysProperty(mContext) && !RootUtil.root();
-        LogUtil.d("是否模拟器");
+        boolean isEmulator = EmulatorCheckUtil.readSysProperty(mContext);
+        boolean isRoot = RootUtil.root();
+        LogUtil.d("是否模拟器 " + isEmulator);
+        LogUtil.d("是否Root " + isRoot);
     }
 }

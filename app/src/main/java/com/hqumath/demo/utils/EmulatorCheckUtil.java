@@ -1,9 +1,5 @@
 package com.hqumath.demo.utils;
 
-import static com.hqumath.demo.utils.CheckResult.RESULT_EMULATOR;
-import static com.hqumath.demo.utils.CheckResult.RESULT_MAYBE_EMULATOR;
-import static com.hqumath.demo.utils.CheckResult.RESULT_UNKNOWN;
-
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -20,6 +16,9 @@ public class EmulatorCheckUtil {
     private static final String TAG = "EmulatorCheck";
     private static final String LABEL_EMULATOR_MAYBE = "*";
     private static final String LABEL_EMULATOR = "**";
+    public static final int RESULT_MAYBE_EMULATOR = 0;//可能是模拟器
+    public static final int RESULT_EMULATOR = 1;//模拟器
+    public static final int RESULT_UNKNOWN = 2;//可能是真机
 
     private EmulatorCheckUtil() {}
 
@@ -363,5 +362,15 @@ public class EmulatorCheckUtil {
         }
         sb.append(key).append(" = ").append(result.value).append("\n");
         return addCount;
+    }
+
+    public static class CheckResult {
+        public int result;
+        public String value;
+
+        public CheckResult(int result, String value) {
+            this.result = result;
+            this.value = value;
+        }
     }
 }
