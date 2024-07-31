@@ -59,8 +59,8 @@ public class EmulatorCheckUtil {
         suspectCount += proResult(sensorNumber < 8, sb, "sensorNumber", String.valueOf(sensorNumber));
 
         //检测已安装第三方应用数量
-        int userAppNumber = getUserAppNumber();
-        suspectCount += proResult(userAppNumber < 6, sb, "userAppNumber", String.valueOf(userAppNumber));
+        //int userAppNumber = getUserAppNumber();
+        //suspectCount += proResult(userAppNumber < 6, sb, "userAppNumber", String.valueOf(userAppNumber));
 
         //检测是否支持闪光灯
         boolean supportCameraFlash = supportCameraFlash(context);
