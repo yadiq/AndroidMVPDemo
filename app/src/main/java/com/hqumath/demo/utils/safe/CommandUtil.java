@@ -1,4 +1,4 @@
-package com.hqumath.demo.utils;
+package com.hqumath.demo.utils.safe;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

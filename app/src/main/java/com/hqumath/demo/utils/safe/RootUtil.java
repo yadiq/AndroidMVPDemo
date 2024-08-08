@@ -1,4 +1,4 @@
-package com.hqumath.demo.utils;
+package com.hqumath.demo.utils.safe;
 
 import android.util.Log;
 
@@ -6,9 +6,18 @@ import androidx.annotation.Nullable;
 
 import java.io.File;
 
+/**
+ * root检测
+ * 是否Root RootUtil.root();
+ */
+
 public class RootUtil {
     private static final String TAG = "RootCheck";
 
+    /**
+     * 是否Root
+     * @return
+     */
     public static boolean root() {
         boolean root = false;
 

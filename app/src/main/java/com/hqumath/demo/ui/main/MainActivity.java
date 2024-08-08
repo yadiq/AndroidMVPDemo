@@ -7,9 +7,6 @@ import android.view.View;
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.databinding.ActivityMainBinding;
 import com.hqumath.demo.ui.repos.MyReposActivity;
-import com.hqumath.demo.utils.EmulatorCheckUtil;
-import com.hqumath.demo.utils.LogUtil;
-import com.hqumath.demo.utils.RootUtil;
 
 /**
  * ****************************************************************
@@ -37,9 +34,5 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        boolean isEmulator = EmulatorCheckUtil.readSysProperty(mContext);
-        boolean isRoot = RootUtil.root();
-        LogUtil.d("是否模拟器 " + isEmulator);
-        LogUtil.d("是否Root " + isRoot);
     }
 }

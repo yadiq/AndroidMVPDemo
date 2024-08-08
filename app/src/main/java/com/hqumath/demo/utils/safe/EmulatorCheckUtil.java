@@ -1,4 +1,4 @@
-package com.hqumath.demo.utils;
+package com.hqumath.demo.utils.safe;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 /**
  * 模拟器检测
+ * 是否模拟器 EmulatorCheckUtil.readSysProperty(mContext);
  */
 public class EmulatorCheckUtil {
     private static final String TAG = "EmulatorCheck";
@@ -22,6 +23,11 @@ public class EmulatorCheckUtil {
 
     private EmulatorCheckUtil() {}
 
+    /**
+     * 是否模拟器
+     * @param context
+     * @return
+     */
     public static boolean readSysProperty(@NonNull Context context) {
         int suspectCount = 0;
         StringBuilder sb = new StringBuilder("check safe[emulator]: ").append("\n");
