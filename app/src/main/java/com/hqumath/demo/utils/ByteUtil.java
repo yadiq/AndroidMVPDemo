@@ -17,9 +17,35 @@ public class ByteUtil {
     private static final String TAG = "ByteUtil1";
 
     public static void main(String[] args) {
-        byte[] b1 = {0, 0, 0, 1};
-        int b2 = ByteUtil.bytesToInt32(b1, 0, false);
-        System.out.println(b2 + "");
+        /*//byte[] b1= {0,0,0,1};//1
+        byte[] b1 = {(byte) 0b10000000, 0, 0, 0};//2147483648
+        //byte[] b1= {(byte) 0x80,0};
+
+        //byte[] b2= {0,0,0,0,0,0,0,1};//1
+        byte[] b2 = { (byte) 0b10000000, 0, 0, 0, 0, 0, 0, 0};//2147483648
+        //byte[] b2 = { (byte) 0x80, 0, 0, 0, 0, 0, 0, 0};//2147483648
+
+        *//*int r1 = bytes2Int(b1, 0, false);
+        float r2 = bytes2Float(b1, 0, false);
+        long r3 = bytes2Long(b2, 0, false);
+        double r4 = bytes2Double(b2, 0, false);*//*
+        long r1 = bytes2Int64(b2,0,false);
+        float r2 = bytes2Float(b1,0,false);
+        double r3 = bytes2Double(b2,0,false);
+
+        System.out.println(r1);
+        System.out.println(r2);
+        System.out.println(r3);*/
+
+        //String uuid = "d04894a4-f658-8d7d-7405-15fff20b6377".replace("-", "");
+        /*String hex = Integer.toHexString(100);
+
+        //String 转 byte[]
+        byte[] data1 = "wintop".getBytes();
+        //16进制 转 byte[]
+        byte[] data2 = ByteUtil.hexToByteArray(hex);//2Hex 1Byte
+        Integer.parseInt(1)
+        System.out.println(hex);*/
     }
 
     /////////////////////////////数值类型转Hex///////////////////////////
@@ -124,16 +150,24 @@ public class ByteUtil {
     }
 
     /**
-     * 将hex转为byte, 两个十六进制数
+     * 将hex转为byte
      *
-     * @param hex char[2]
+     * @param hex char[2], 两个十六进制数
      */
     public static byte hexToByte(String hex) {
-        return (byte) Integer.parseInt(hex, 16);
+        byte b = 0;
+        try {
+            b = (byte) Integer.parseInt(hex, 16);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
     /**
-     * 将hex转为byte, 2n个十六进制数
+     * 将hex转为byte[]
+     *
+     * @param hex, 2n个十六进制数，注意不要有空格
      */
     public static byte[] hexToBytes(String hex) {
         hex = hex.replace(" ", "");
@@ -143,15 +177,15 @@ public class ByteUtil {
         int byteLen = hex.length() / 2;
         byte[] result = new byte[byteLen];
         for (int i = 0; i < byteLen; i++) {
-            result[i] = hexToByte(hex.substring(i * 2, (i + 1) * 2));
+            result[i] = hexToByte(hex.substring(i * 2, i * 2 + 2));
         }
         return result;
     }
 
     /**
-     * 将binary转为byte, 八个二进制数
+     * 将binary转为byte
      *
-     * @param binary char[8]
+     * @param binary char[8], 八个二进制数
      */
     public static byte binaryToByte(String binary) {
         return (byte) Integer.parseInt(binary, 2);
@@ -204,6 +238,29 @@ public class ByteUtil {
             array[i] = ((b >> shift) & 1) == 1;
         }
         return array;
+    }
+
+    /**
+     * byte[]转bit，以空格间隔
+     */
+    public static String byteToBitWithSpace(byte b) {
+        StringBuilder sb = new StringBuilder();
+        boolean[] booleans = byteToBooleans(b, false);
+        for (int i = 0; i < booleans.length; i++) {
+            sb.append(" " + (booleans[i] ? "1" : "0"));
+        }
+        return sb.toString();
+    }
+	
+    /**
+     * 打印boolean[]
+     */
+    public static String booleansToStringWithSpace(boolean[] array) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < array.length; i++) {
+            sb.append(array[i]).append(" ");
+        }
+        return sb.toString();
     }
 
     /**
@@ -376,14 +433,4 @@ public class ByteUtil {
         return (short) ((data[1] & 0xFF) | (data[0] << 8));
     }
 
-    /**
-     * 打印boolean[]
-     */
-    public static String booleansToStringWithSpace(boolean[] array) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < array.length; i++) {
-            sb.append(array[i]).append(" ");
-        }
-        return sb.toString();
-    }
 }
