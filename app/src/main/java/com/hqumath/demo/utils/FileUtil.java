@@ -1,5 +1,6 @@
 package com.hqumath.demo.utils;
 
+import android.content.Context;
 import android.os.Environment;
 
 import com.hqumath.demo.net.HandlerException;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import okhttp3.ResponseBody;
 
@@ -172,6 +174,53 @@ public class FileUtil {
             String msg = ByteUtil.bytesToHexWithSpace(buffer);
             msg = msg.replace("00 00 00 01 ", "\n");
             LogUtil.d(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 复制assets文件夹到本地存储。若存在则跳过
+     * 例如专属外部存储空间：context.getExternalFilesDir("").getPath()
+     *
+     * @param context
+     * @param assetsDirName
+     * @param sdCardPath
+     */
+    public static void copyAssetsDirToSDCard(Context context, String assetsDirName, String sdCardPath) {
+        try {
+            String list[] = context.getAssets().list(assetsDirName);
+            if (list.length == 0) {
+                InputStream inputStream = context.getAssets().open(assetsDirName);
+                byte[] mByte = new byte[1024];
+                int bt = 0;
+                File file = new File(sdCardPath + File.separator
+                        + assetsDirName.substring(assetsDirName.lastIndexOf('/')));
+                if (!file.exists()) {
+                    file.createNewFile();
+                } else {
+                    return;
+                }
+                FileOutputStream fos = new FileOutputStream(file);
+                while ((bt = inputStream.read(mByte)) != -1) {
+                    fos.write(mByte, 0, bt);
+                }
+                fos.flush();
+                inputStream.close();
+                fos.close();
+            } else {
+                String subDirName = assetsDirName;
+                if (assetsDirName.contains("/")) {
+                    subDirName = assetsDirName.substring(assetsDirName.lastIndexOf('/') + 1);
+                }
+                sdCardPath = sdCardPath + File.separator + subDirName;
+                File file = new File(sdCardPath);
+                if (!file.exists())
+                    file.mkdirs();
+                for (String s : list) {
+                    copyAssetsDirToSDCard(context, assetsDirName + File.separator + s, sdCardPath);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
