@@ -181,20 +181,30 @@ public class FileUtil {
 
     /**
      * 复制assets文件夹到本地存储。若存在则跳过
-     * 例如专属外部存储空间：context.getExternalFilesDir("").getPath()
      *
      * @param context
-     * @param assetsDirName
-     * @param sdCardPath
+     * @param assetsDirName assets子文件夹名称
      */
-    public static void copyAssetsDirToSDCard(Context context, String assetsDirName, String sdCardPath) {
+    public static void copyAssetsDirToSDCard(Context context, String assetsDirName) {
+        String filePath = context.getExternalFilesDir("").getAbsolutePath();
+        copyAssetsDirToSDCard(context, assetsDirName, filePath);
+    }
+
+    /**
+     * 复制assets文件夹到本地存储。若存在则跳过
+     *
+     * @param context
+     * @param assetsDirName assets子文件夹名称
+     * @param filePath 存储目录
+     */
+    public static void copyAssetsDirToSDCard(Context context, String assetsDirName, String filePath) {
         try {
             String list[] = context.getAssets().list(assetsDirName);
             if (list.length == 0) {
                 InputStream inputStream = context.getAssets().open(assetsDirName);
                 byte[] mByte = new byte[1024];
                 int bt = 0;
-                File file = new File(sdCardPath + File.separator
+                File file = new File(filePath + File.separator
                         + assetsDirName.substring(assetsDirName.lastIndexOf('/')));
                 if (!file.exists()) {
                     file.createNewFile();
@@ -213,12 +223,12 @@ public class FileUtil {
                 if (assetsDirName.contains("/")) {
                     subDirName = assetsDirName.substring(assetsDirName.lastIndexOf('/') + 1);
                 }
-                sdCardPath = sdCardPath + File.separator + subDirName;
-                File file = new File(sdCardPath);
+                filePath = filePath + File.separator + subDirName;
+                File file = new File(filePath);
                 if (!file.exists())
                     file.mkdirs();
                 for (String s : list) {
-                    copyAssetsDirToSDCard(context, assetsDirName + File.separator + s, sdCardPath);
+                    copyAssetsDirToSDCard(context, assetsDirName + File.separator + s, filePath);
                 }
             }
         } catch (Exception e) {
