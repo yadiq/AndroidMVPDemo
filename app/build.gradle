@@ -1,12 +1,16 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 31
+    namespace 'com.hqumath.demo' //影响R类生成
+    compileSdk 31
+
     defaultConfig {
-        applicationId "com.hqumath.demo"
-        minSdkVersion 21
+        applicationId "com.hqumath.demo" //影响AndroidManifest中package
+        minSdk 21
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 31
+        targetSdk 31
         versionCode 20210902
         versionName "2.1"
         //multiDexEnabled true
