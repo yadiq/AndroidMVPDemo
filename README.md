@@ -1,33 +1,7 @@
-# AndroidMVP
-一个简单的 Android MVP 项目，整合了Retrofit+RxJava网络模块。
+# AndroidMVPDemo
+AndroidMVP的精简版本，快速开发框架
 
-## 框架特点
-
-- **MVP结构**
-
-    1. 表示层 <=> 业务层 => 数据层
-    2. View <=> Presenter => Model
-
-- **流行框架**
-
-    1. [retrofit](https://github.com/square/retrofit)+[okhttp](https://github.com/square/okhttp)+[rxJava](https://github.com/ReactiveX/RxJava)负责网络请求
-    2. [gson](https://github.com/google/gson)负责解析json数据
-    3. AndPermission 权限管理
-    4. SmartRefreshLayout 下拉刷新
-
-- **基类封装**
-
-    1. BaseActivity
-    2. BaseFragment
-    3. BasePresenter
-
-- **全局操作**
-
-    1. 全局的Activity堆栈式管理
-    2. 全局拦截网络请求日志 LogInterceptor
-     
 ## 图标
-
 1. mipmap文件夹只存放启动图标icon
 2. Android手机屏幕标准                    对应图标尺寸标准      屏幕密度       比例
    xxxhdpi 3840*2160                         192*192             640          16
@@ -35,22 +9,18 @@
    xhdpi  1280*720                            96*96              320           8
 
 ## 屏幕适配
-
 1. 主要适配屏幕信息：1080x1920 px ,360x640 dp (对角线2202.91px)
 2. density（dp密度，1dp上有多少个像素）=1080px / 360dp = 3 px/dp
 3. densitydpi（屏幕像素密度，简称dpi，表示1英寸上对应有多少个像素）=160 * density= 480（因为第一款Android设备 160dpi)
 	(屏幕尺寸=对角线像素数/densitydpi=4.59英寸)
 4. 注意.xml文件预览仅支持部分densitydpi（例如：400 420 440 480等）
 
-
 ## AGP与gradle、JDK、AS等版本的对应关系
-
 1. 概念 
 + AGP (Android Gradle Plugin)
 在 Android Studio 工程根目录下的 build.gradle 构建脚本中配置
 + Gradle (构建工具) 
 在工程根目录下的 gradle/wrapper/gradle-wrapper.properties 文件中配置
-
 
 2. AGP与Gradle、JDK 的版本对应关系
 https://developer.android.google.cn/build/releases/gradle-plugin?hl=zh-cn#updating-gradle
