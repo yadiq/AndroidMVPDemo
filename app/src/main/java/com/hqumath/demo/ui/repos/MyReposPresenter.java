@@ -45,7 +45,7 @@ public class MyReposPresenter extends BasePresenter<MyReposPresenter.Contract> {
         if (isRefresh) {
             pageIndex = 1;
         }
-        String userName = "Ninja2005";
+        String userName = "yadiq";
         ((MyModel) mModel).getMyRepos(userName, pageSize, pageIndex, new HttpListener() {
             @Override
             public void onSuccess(Object object) {

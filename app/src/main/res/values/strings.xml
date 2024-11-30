@@ -1,14 +1,7 @@
 <resources>
     <string name="app_name">AndroidDemo</string>
 
-    <!--登录界面-->
-    <string name="user_name">用户名</string>
-    <string name="password">密码</string>
-    <string name="login">登录</string>
-    <string name="user_name_warning">用户名不正确!</string>
-    <string name="password_warning">密码不正确!</string>
-
-    <!--列表界面-->
+    <!--主界面-->
     <string name="my_repos">我的仓库</string>
 
     <!--权限获取-->
