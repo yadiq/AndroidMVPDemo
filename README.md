@@ -23,38 +23,38 @@ AndroidMVP的精简版本，快速开发框架
 在工程根目录下的 gradle/wrapper/gradle-wrapper.properties 文件中配置
 
 2. AGP与Gradle、JDK 的版本对应关系
-https://developer.android.google.cn/build/releases/gradle-plugin?hl=zh-cn#updating-gradle
-https://blog.csdn.net/fxjzzyo/article/details/134390809
-   AGP              最小Gradle  最小JDK
-   8.4	             8.6	    17
-   8.3	             8.4     	17
-   8.2            	 8.2	    17
-   8.1	             8.0	    17
-   8.0.0	         8.0	    17
-   7.4.0	         7.5	    11
-   7.3.1             7.4        11 #当前选择 对应JDK17
-   7.2               7.3.3      11
-   7.1.2             7.2        11   
-   7.0               7.0        11
-   4.2.1             6.7.1       8 #之前选择 对应JDK11
-   4.1.0             6.5+        8
-   4.0.0             6.1.1+      8
-   3.6.0 - 3.6.4     5.6.4+      8
-   3.5.0 - 3.5.4     5.4.1+      8
-   3.4.0 - 3.4.3     5.1.1+      8
-   3.3.0 - 3.3.3     4.10.1+     7
++ AGP           最小Gradle  最小JDK
++ 8.4	            8.6	    17
++ 8.3	            8.4   	17
++ 8.2            	8.2	    17
++ 8.1	            8.0	    17
++ 8.0.0	            8.0	    17
++ 7.4.0	            7.5	    11
++ 7.3.1             7.4     11 #当前选择 对应JDK17
++ 7.2               7.3.3   11
++ 7.1.2             7.2     11   
++ 7.0               7.0     11
++ 4.2.1             6.7.1    8 #之前选择 对应JDK11
++ 4.1.0             6.5+     8
++ 4.0.0             6.1.1+   8
++ 3.6.0 - 3.6.4     5.6.4+   8
++ 3.5.0 - 3.5.4     5.4.1+   8
++ 3.4.0 - 3.4.3     5.1.1+   8
++ 3.3.0 - 3.3.3     4.10.1+  7
+[官方文档](https://developer.android.google.cn/build/releases/gradle-plugin?hl=zh-cn#updating-gradle)
+[其它文档](https://blog.csdn.net/fxjzzyo/article/details/134390809)
 
 3. AS与AGP版本关系
-AndroidStudio          AGP
-Koala | 2024.1.1       3.2-8.5
-Jellyfish | 2023.3.1   3.2-8.4 稳定版本
-Iguana | 2023.2.1	   3.2-8.3
-Hedgehog | 2023.1.1	   3.2-8.2
-Giraffe | 2022.3.1     3.2-8.1
-Flamingo | 2022.2.1    3.2-8.0 当前版本
-ElectricEel | 2022.1.1 3.2-7.4
-Dolphin | 2021.3.1     3.2-7.3
-Chipmunk | 2021.2.1    3.2-7.2
-Bumblebee | 2021.1.1   3.2-7.1
-Arctic Fox | 2020.3.1  3.1-7.0
++ AndroidStudio          AGP
++ Koala | 2024.1.1       3.2-8.5
++ Jellyfish | 2023.3.1   3.2-8.4 稳定版本
++ Iguana | 2023.2.1	   3.2-8.3
++ Hedgehog | 2023.1.1	   3.2-8.2
++ Giraffe | 2022.3.1     3.2-8.1
++ Flamingo | 2022.2.1    3.2-8.0 当前版本
++ ElectricEel | 2022.1.1 3.2-7.4
++ Dolphin | 2021.3.1     3.2-7.3
++ Chipmunk | 2021.2.1    3.2-7.2
++ Bumblebee | 2021.1.1   3.2-7.1
++ Arctic Fox | 2020.3.1  3.1-7.0
 
