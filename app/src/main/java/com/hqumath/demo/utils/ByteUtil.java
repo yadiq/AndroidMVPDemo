@@ -206,18 +206,16 @@ public class ByteUtil {
 
 
     /**
-     * 将一个长度为8的boolean数组（每bit代表一个boolean值）转换为byte
-     *
-     * @param array        boolean[8]
-     * @param littleEndian 是否小端，低地址存低字节。
+     * 将一个长度为8的boolean数组（每bit代表一个boolean值）转换为byte。数组正向
+     * 0x01 二进制为 0000 0001, bit7:0
+     * @param array boolean[8]
      */
-    public static byte booleansToByte(boolean[] array, boolean littleEndian) {
+    public static byte booleansToByte(boolean[] array) {
         byte b = 0;
         if (array != null && array.length == 8) {
             for (int i = 0; i < 8; i++) {
                 if (array[i]) {
-                    int shift = littleEndian ? i : (7 - i);//需要移位的数量
-                    b += (1 << shift);
+                    b += (1 << i);
                 }
             }
         }
@@ -226,39 +224,27 @@ public class ByteUtil {
     /////////////////////////////byte[]转数值类型////////////////////////////
 
     /**
-     * 将byte转为boolean[8]
-     *
-     * @param b            1个字节
-     * @param littleEndian 是否小端，低地址存低字节。
+     * 将byte转为boolean[8]。数组正向
+     * 0x01 二进制为 0000 0001, bit7:0
+     * @param b 1个字节
      */
-    public static boolean[] byteToBooleans(byte b, boolean littleEndian) {
+    public static boolean[] byteToBooleans(byte b) {
         boolean[] array = new boolean[8];
-        for (int i = 0; i < 8; i++) {
-            int shift = littleEndian ? i : (7 - i);//需要移位的数量
-            array[i] = ((b >> shift) & 1) == 1;
+        for (int i = 0; i < 8; i++) { //对于byte的每bit进行判定
+            array[i] = (b & 1) == 1;  //判定byte的最后一位是否为1，若为1，则是true；否则是false
+            b = (byte) (b >> 1);    //将byte右移一位
         }
         return array;
     }
 
     /**
-     * byte[]转bit，以空格间隔
+     * byte[]转bit，以空格间隔, bit7:0
      */
     public static String byteToBitWithSpace(byte b) {
         StringBuilder sb = new StringBuilder();
-        boolean[] booleans = byteToBooleans(b, false);
-        for (int i = 0; i < booleans.length; i++) {
+        boolean[] booleans = byteToBooleans(b);
+        for (int i = booleans.length - 1; i >= 0; i--) {
             sb.append(" " + (booleans[i] ? "1" : "0"));
-        }
-        return sb.toString();
-    }
-	
-    /**
-     * 打印boolean[]
-     */
-    public static String booleansToStringWithSpace(boolean[] array) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < array.length; i++) {
-            sb.append(array[i]).append(" ");
         }
         return sb.toString();
     }
