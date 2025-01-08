@@ -238,12 +238,12 @@ public class ByteUtil {
     }
 
     /**
-     * byte[]转bit，以空格间隔, bit7:0
+     * byte转bit[]，打印bit0:7，以空格间隔,
      */
     public static String byteToBitWithSpace(byte b) {
         StringBuilder sb = new StringBuilder();
         boolean[] booleans = byteToBooleans(b);
-        for (int i = booleans.length - 1; i >= 0; i--) {
+        for (int i = 0; i < booleans.length; i++) {
             sb.append(" " + (booleans[i] ? "1" : "0"));
         }
         return sb.toString();
