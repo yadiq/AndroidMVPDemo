@@ -46,6 +46,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         MultiLanguageUtil.updateConfiguration(this);
     }*/
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissLoading();
+    }
+
     protected abstract View initContentView(Bundle savedInstanceState);
 
     protected abstract void initListener();
@@ -62,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void dismissLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
     }
