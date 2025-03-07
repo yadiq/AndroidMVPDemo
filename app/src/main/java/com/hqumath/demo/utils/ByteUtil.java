@@ -46,6 +46,8 @@ public class ByteUtil {
         byte[] data2 = ByteUtil.hexToByteArray(hex);//2Hex 1Byte
         Integer.parseInt(1)
         System.out.println(hex);*/
+        byte[] b1= {(byte) 0x80,0};
+        System.out.println(ByteUtil.bytesToHexWithSpace(b1));
     }
 
     /////////////////////////////数值类型转Hex///////////////////////////
