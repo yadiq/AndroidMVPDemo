@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextureView
         android:id="@+id/textureView"
-        android:layout_width="640dp"
-        android:layout_height="360dp"
+        android:layout_width="1280dp"
+        android:layout_height="720dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,11 +25,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <View
+    <!--<View
         android:layout_width="640px"
         android:layout_height="400px"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/green"/>
+        android:background="@color/green"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

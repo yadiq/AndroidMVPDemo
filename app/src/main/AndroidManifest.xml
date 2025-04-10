@@ -55,7 +55,7 @@
         <activity
             android:name="com.hqumath.demo.ui.main.CameraActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale|locale"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="landscape" />
 
         <activity
