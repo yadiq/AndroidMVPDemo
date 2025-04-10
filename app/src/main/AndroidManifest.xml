@@ -26,7 +26,7 @@
         <!--屏幕适配，最小宽度-->
         <meta-data
             android:name="design_width_in_dp"
-            android:value="360" />
+            android:value="800" />
 
         <!--configChanges写全
         "orientation" 屏幕方向改变
@@ -44,13 +44,19 @@
             android:name="com.hqumath.demo.ui.main.MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale|locale"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.hqumath.demo.ui.main.CameraActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale|locale"
+            android:exported="true"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name="com.hqumath.demo.ui.repos.MyReposActivity"

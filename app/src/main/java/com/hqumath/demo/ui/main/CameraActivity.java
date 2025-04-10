@@ -33,7 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.hqumath.demo.base.BaseActivity;
-import com.hqumath.demo.databinding.ActivityMainBinding;
+import com.hqumath.demo.databinding.ActivityCameraBinding;
 import com.hqumath.demo.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -42,17 +42,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * ****************************************************************
- * 作    者: Created by gyd
- * 创建时间: 2023/10/25 9:35
- * 文件描述: 主界面
- * Surface可用=>设置相机参数并打开相机=>开启预览
- * 注意事项:
- * ****************************************************************
- */
-public class MainActivity1 extends BaseActivity {
-    private ActivityMainBinding binding;
+public class CameraActivity extends BaseActivity {
+    private ActivityCameraBinding binding;
 
     private static final SparseIntArray ORIENTATION = new SparseIntArray();
 
@@ -80,14 +71,14 @@ public class MainActivity1 extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityCameraBinding.inflate(getLayoutInflater());
         return binding.getRoot();
     }
 
     @Override
     protected void initListener() {
         binding.btnCapture.setOnClickListener(v -> {
-            takePicture();
+            lockFocus();
         });
     }
 
@@ -95,67 +86,80 @@ public class MainActivity1 extends BaseActivity {
     protected void initData() {
         getCameraInfo();
         ActivityCompat.requestPermissions(mContext, new String[]{Manifest.permission.CAMERA}, 0);
+        //预览监听
+        binding.textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+            @Override
+            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                startBackgroundThread();
+                setupCamera(width, height);//设置相机参数
+                setupImageReader();//拍照所需
+                openCamera();//打开相机
+            }
+
+            @Override
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+            }
+
+            @Override
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                stopBackgroundThread();
+                closeCamera();
+                return false;
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+            }
+        });
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        startCameraThread();
-        if (!binding.textureView.isAvailable()) {
-            binding.textureView.setSurfaceTextureListener(mTextureListener);
-        } else {
-            startPreview();
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        closeCamera();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mCameraCaptureSession != null) {
-            mCameraCaptureSession.close();
-            mCameraCaptureSession = null;
-        }
-
-        if (mCameraDevice != null) {
-            mCameraDevice.close();
-            mCameraDevice = null;
-        }
-
-        if (mImageReader != null) {
-            mImageReader.close();
-            mImageReader = null;
-        }
-    }
-
-    private void startCameraThread() {
+    public void startBackgroundThread() {
         mCameraThread = new HandlerThread("CameraThread");
         mCameraThread.start();
         mCameraHandler = new Handler(mCameraThread.getLooper());
     }
 
-    private TextureView.SurfaceTextureListener mTextureListener = new TextureView.SurfaceTextureListener() {
-        @Override
-        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            //当SurefaceTexture可用的时候，设置相机参数并打开相机
-            setupCamera(width, height);
-            openCamera();
+    public void stopBackgroundThread() {
+        if (mCameraThread != null) {
+            mCameraThread.quitSafely();
+            try {
+                mCameraThread.join();
+                mCameraThread = null;
+                mCameraHandler = null;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
 
-        @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (mCameraCaptureSession != null) {
+//            mCameraCaptureSession.close();
+//            mCameraCaptureSession = null;
+//        }
+//
+//        if (mCameraDevice != null) {
+//            mCameraDevice.close();
+//            mCameraDevice = null;
+//        }
+//
+//        if (mImageReader != null) {
+//            mImageReader.close();
+//            mImageReader = null;
+//        }
+//    }
 
-        }
-
-        @Override
-        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-            return false;
-        }
-
-        @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
-        }
-    };
 
     //检索所有相机的列表
     private void getCameraInfo() {
@@ -169,7 +173,7 @@ public class MainActivity1 extends BaseActivity {
 
                 CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
                 int sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-                info.append("sensorOrientation:" + sensorOrientation + ",\n");//传感器旋转角度,有的摄像头不是0度
+                info.append("旋转角度:" + sensorOrientation + ",\n");//传感器旋转角度,有的摄像头不是0度
 
                 Range<Integer>[] ranges = characteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES);
                 //LogUtil.d("帧率范围: "+ Arrays.toString(ranges));//相机设备支持的帧率范围
@@ -179,21 +183,21 @@ public class MainActivity1 extends BaseActivity {
                 int cameraLensFacing = characteristics.get(CameraCharacteristics.LENS_FACING);//获取摄像头类型 相机设备相对于屏幕的方向
                 switch (cameraLensFacing) {
                     case CameraMetadata.LENS_FACING_FRONT:
-                        info.append("lensFacing(前后摄):" + "front" + ",\n");
+                        info.append("前后摄:" + "front" + ",\n");
                         break;
                     case CameraMetadata.LENS_FACING_BACK:
-                        info.append("lensFacing(前后摄):" + "back" + ",\n");
+                        info.append("前后摄:" + "back" + ",\n");
                         break;
                     case CameraMetadata.LENS_FACING_EXTERNAL:
-                        info.append("lensFacing(前后摄):" + "external" + ",\n");
+                        info.append("前后摄:" + "external" + ",\n");
                         break;
                 }
                 info.append("}\n\n");
                 LogUtil.d("相机信息: " + info);//相机设备支持的帧率范围
 
                 //相机设备支持的可用流的配置，包括最小帧间隔、不同格式、大小组合的失帧时长
-                Size[] supportedSizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
-                        .getOutputSizes(ImageFormat.YUV_420_888);//支持的分辨率
+                StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);//获取输出格式和尺寸
+                Size[] supportedSizes = map.getOutputSizes(ImageFormat.YUV_420_888);//支持的分辨率
                 for (Size size : supportedSizes) {
                     int width = size.getWidth();
                     int height = size.getHeight();
@@ -207,6 +211,7 @@ public class MainActivity1 extends BaseActivity {
         }
     }
 
+    //获取相机参数，预览尺寸、拍照尺寸
     private void setupCamera(int width, int height) {
         //获取摄像头的管理者CameraManager
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -214,12 +219,11 @@ public class MainActivity1 extends BaseActivity {
             //遍历所有摄像头
             for (String cameraId : manager.getCameraIdList()) {
                 CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
-                Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+                Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);//获取摄像头类型
                 //此处默认打开后置摄像头
                 if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT)
                     continue;
-                //获取StreamConfigurationMap，它是管理摄像头支持的所有输出格式和尺寸
-                StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);//获取输出格式和尺寸
                 assert map != null;
                 //根据TextureView的尺寸设置预览尺寸
                 mPreviewSize = getOptimalSize(map.getOutputSizes(SurfaceTexture.class), width, height);
@@ -230,8 +234,9 @@ public class MainActivity1 extends BaseActivity {
                         return Long.signum(lhs.getWidth() * lhs.getHeight() - rhs.getHeight() * rhs.getWidth());
                     }
                 });
-                //此ImageReader用于拍照所需
-                setupImageReader();
+                LogUtil.d("相机id：" + cameraId);
+                LogUtil.d("画布尺寸: " + width + "x" + height + " 预览尺寸: " + mPreviewSize.getWidth() + "x" + mPreviewSize.getHeight());
+                LogUtil.d("拍照尺寸：" + mCaptureSize.getWidth() + "x" + mCaptureSize.getHeight());
                 mCameraId = cameraId;
                 break;
             }
@@ -245,17 +250,17 @@ public class MainActivity1 extends BaseActivity {
         List<Size> sizeList = new ArrayList<>();
         for (Size option : sizeMap) {
             if (width > height) {
-                if (option.getWidth() > width && option.getHeight() > height) {
+                if (option.getWidth() >= width && option.getHeight() >= height) {
                     sizeList.add(option);
                 }
             } else {
-                if (option.getWidth() > height && option.getHeight() > width) {
+                if (option.getWidth() >= height && option.getHeight() >= width) {
                     sizeList.add(option);
                 }
             }
         }
         if (sizeList.size() > 0) {
-            return Collections.min(sizeList, new Comparator<Size>() {
+            return Collections.min(sizeList, new Comparator<Size>() {//查找最小值
                 @Override
                 public int compare(Size lhs, Size rhs) {
                     return Long.signum(lhs.getWidth() * lhs.getHeight() - rhs.getWidth() * rhs.getHeight());
@@ -265,6 +270,7 @@ public class MainActivity1 extends BaseActivity {
         return sizeMap[0];
     }
 
+    //打开相机
     private void openCamera() {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -295,13 +301,26 @@ public class MainActivity1 extends BaseActivity {
         }
     }
 
+    private void closeCamera() {
+        if (mCameraDevice != null) {
+            mCameraDevice.close();
+            mCameraDevice = null;
+        }
+        if (mImageReader != null) {
+            mImageReader.close();
+            mImageReader = null;
+        }
+    }
+
+    //开启预览
     private void startPreview() {
         SurfaceTexture mSurfaceTexture = binding.textureView.getSurfaceTexture();
-        mSurfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
+        mSurfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());//默认缓冲区大小
         Surface previewSurface = new Surface(mSurfaceTexture);
         try {
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mCaptureRequestBuilder.addTarget(previewSurface);
+            //相机捕获会话。两个输出缓冲区  SurfaceView、ImageReader
             mCameraDevice.createCaptureSession(Arrays.asList(previewSurface, mImageReader.getSurface()), new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(CameraCaptureSession session) {
@@ -322,10 +341,6 @@ public class MainActivity1 extends BaseActivity {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-    }
-
-    public void takePicture() {
-        lockFocus();
     }
 
     private void lockFocus() {
@@ -373,6 +388,7 @@ public class MainActivity1 extends BaseActivity {
         }
     }
 
+    //拍照所需
     private void setupImageReader() {
         //2代表ImageReader中最多可以获取两帧图像流
         mImageReader = ImageReader.newInstance(mCaptureSize.getWidth(), mCaptureSize.getHeight(),
