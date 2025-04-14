@@ -40,6 +40,8 @@ public class MainActivity extends BaseActivity {
         binding.btn2.setOnClickListener(v -> {
             startActivity(new Intent(mContext, CameraActivity.class));
         });
+
+        binding.btn2.performClick();
     }
 
     @Override

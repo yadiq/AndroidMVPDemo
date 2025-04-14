@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.hqumath.demo.utils.CommonUtil;
+import com.hqumath.demo.utils.LogUtil;
 
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.onAdaptListener;
@@ -42,10 +43,11 @@ public class App extends Application {
                         //使用以下代码, 可以解决横竖屏切换时的屏幕适配问题
                         //使用以下代码, 可支持 Android 的分屏或缩放模式, 但前提是在分屏或缩放模式下当用户改变您 App 的窗口大小时
                         //系统会重绘当前的页面, 经测试在某些机型, 某些情况下系统不会重绘当前页面, ScreenUtils.getScreenSize(activity) 的参数一定要不要传 Application!!!
-                        int widthPixels = ScreenUtils.getScreenSize(activity)[0];
-                        int heightPixels = ScreenUtils.getScreenSize(activity)[1];
+                        int widthPixels = ScreenUtils.getRawScreenSize(activity)[0];
+                        int heightPixels = ScreenUtils.getRawScreenSize(activity)[1];
                         AutoSizeConfig.getInstance().setScreenWidth(Math.min(widthPixels, heightPixels));//使用宽高中的最小值计算最小宽度
                         AutoSizeConfig.getInstance().setScreenHeight(Math.max(widthPixels, heightPixels));
+                        LogUtil.d("设备尺寸 widthPixels:" + widthPixels + " heightPixels:" + heightPixels);
                         //AutoSizeLog.d(String.format(Locale.ENGLISH, "%s onAdaptBefore!", target.getClass().getName()));
                     }
 

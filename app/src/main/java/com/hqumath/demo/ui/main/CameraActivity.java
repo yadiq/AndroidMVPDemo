@@ -34,12 +34,19 @@ import androidx.core.app.ActivityCompat;
 
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.databinding.ActivityCameraBinding;
+import com.hqumath.demo.utils.FileUtil;
 import com.hqumath.demo.utils.LogUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class CameraActivity extends BaseActivity {
@@ -70,6 +77,8 @@ public class CameraActivity extends BaseActivity {
         //全屏无状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //隐藏底部导航栏
+        controlBottomNavigation(false);
 
         binding = ActivityCameraBinding.inflate(getLayoutInflater());
         return binding.getRoot();
@@ -221,7 +230,9 @@ public class CameraActivity extends BaseActivity {
                 CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);//获取摄像头类型
                 //此处默认打开后置摄像头
-                if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT)
+//                if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT)
+//                    continue;
+                if (!cameraId.equals("0"))//TODO
                     continue;
                 StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);//获取输出格式和尺寸
                 assert map != null;
@@ -396,46 +407,56 @@ public class CameraActivity extends BaseActivity {
         mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
             @Override
             public void onImageAvailable(ImageReader reader) {
-                mCameraHandler.post(new imageSaver(reader.acquireNextImage()));
+                mCameraHandler.post(new ImageSaver(reader.acquireNextImage()));
             }
         }, mCameraHandler);
     }
 
-    public static class imageSaver implements Runnable {
+    public static class ImageSaver implements Runnable {
 
         private Image mImage;
 
-        public imageSaver(Image image) {
+        public ImageSaver(Image image) {
             mImage = image;
         }
 
         @Override
         public void run() {
-//            ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
-//            byte[] data = new byte[buffer.remaining()];
-//            buffer.get(data);
-//            String path = Environment.getExternalStorageDirectory() + "/DCIM/CameraV2/";
-//            File mImageFile = new File(path);
-//            if (!mImageFile.exists()) {
-//                mImageFile.mkdir();
-//            }
-//            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//            String fileName = path + "IMG_" + timeStamp + ".jpg";
-//            FileOutputStream fos = null;
-//            try {
-//                fos = new FileOutputStream(fileName);
-//                fos.write(data, 0, data.length);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } finally {
-//                if (fos != null) {
-//                    try {
-//                        fos.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
+            //TODO 五合一设备，不能存储到外部存储空间
+            ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
+            byte[] data = new byte[buffer.remaining()];
+            buffer.get(data);
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            File file = FileUtil.getFile("Camera", "IMG_" + timeStamp + ".jpg");
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(file.getAbsolutePath());
+                fos.write(data, 0, data.length);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (fos != null) {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 控制底部导航栏，显示/隐藏虚拟按键
+     *
+     * @param isShow true:显示；false：隐藏
+     */
+    private void controlBottomNavigation(boolean isShow) {
+        //隐藏虚拟按键
+        if (isShow) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
         }
     }
 }

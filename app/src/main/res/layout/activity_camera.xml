@@ -26,10 +26,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!--<View
-        android:layout_width="640px"
-        android:layout_height="400px"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/green"/>-->
+        android:layout_width="640dp"
+        android:layout_height="400dp"
+        android:background="@color/green"/>
+
+    <View
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="640dp"
+        android:layout_height="400dp"
+        android:background="@color/theme_color"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
