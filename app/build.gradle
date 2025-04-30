@@ -14,6 +14,9 @@ android {
         versionCode 20210902
         versionName "2.1"
         //multiDexEnabled true
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
     }
     buildFeatures {
         viewBinding = true
@@ -59,4 +62,7 @@ dependencies {
     //下拉刷新
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+
+    //异常捕获
+    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.1.0'
 }

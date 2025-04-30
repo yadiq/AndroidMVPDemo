@@ -2,6 +2,7 @@ package com.hqumath.demo.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.hqumath.demo.utils.CommonUtil;
@@ -54,6 +55,12 @@ public class App extends Application {
                         //AutoSizeLog.d(String.format(Locale.ENGLISH, "%s onAdaptAfter!", target.getClass().getName()));
                     }
                 });
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        xcrash.XCrash.init(this);
     }
 
     /*@Override
