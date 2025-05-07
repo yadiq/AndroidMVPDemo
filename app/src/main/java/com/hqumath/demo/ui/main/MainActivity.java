@@ -5,13 +5,12 @@ import android.view.View;
 
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.databinding.ActivityMainBinding;
+import com.hqumath.demo.utils.ExceptionUtil;
 import com.hqumath.demo.utils.LogUtil;
 
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Map;
 
 import xcrash.TombstoneManager;
@@ -47,10 +46,8 @@ public class MainActivity extends BaseActivity {
         try {
             int a = 1 / 0;
         } catch (Exception e) {
-            //e.printStackTrace();
-            StringWriter stringWriter = new StringWriter();
-            e.printStackTrace(new PrintWriter(stringWriter, true));
-            LogUtil.d(stringWriter.toString());
+            e.printStackTrace();
+            LogUtil.d(ExceptionUtil.ExceptionToString(e));
         }
     }
 
