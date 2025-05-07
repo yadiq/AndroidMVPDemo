@@ -10,6 +10,7 @@ import com.hqumath.demo.utils.CommonUtil;
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.onAdaptListener;
 import me.jessyan.autosize.utils.ScreenUtils;
+import xcrash.XCrash;
 
 /**
  * ****************************************************************
@@ -60,7 +61,31 @@ public class App extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        //初始化和配置
         xcrash.XCrash.init(this);
+        /*XCrash.init(this, new XCrash.InitParameters()
+            .setAppVersion("1.2.3-beta456-patch789")//版本号，默认versionName 1.0.0
+            .setJavaRethrow(true)//处理后是否应向系统重新抛出Java异常，默认true
+            .setJavaLogCountMax(10)//保存在日志目录中的Java崩溃日志文件的最大数量。默认10
+            .setJavaDumpAllThreadsWhiteList(new String[]{"^main$", "^Binder:.*", ".*Finalizer.*"})//需要转储线程名称的白名单
+            .setJavaDumpAllThreadsCountMax(10)//设置发生Java异常时要转储的其他线程的最大数量。
+            .setJavaCallback(callback)//java异常回调
+            .setNativeRethrow(true)
+            .setNativeLogCountMax(10)
+            .setNativeDumpAllThreadsWhiteList(new String[]{"^xcrash\\.sample$", "^Signal Catcher$", "^Jit thread pool$", ".*(R|r)ender.*", ".*Chrome.*"})
+            .setNativeDumpAllThreadsCountMax(10)
+            .setNativeCallback(callback)
+            //.setAnrCheckProcessState(false)
+            .setAnrRethrow(true)//设置进程错误状态是否是ANR的必要条件。（默认值：true）
+            .setAnrLogCountMax(10)
+            .setAnrCallback(callback)
+            .setAnrFastCallback(anrFastCallback)
+            .setPlaceholderCountMax(3)//占位符文件的最大数量 设置为0表示禁用占位符功能
+            .setPlaceholderSizeKb(512)//设置日志目录中每个占位符文件的KB
+            //.setLogDir(getExternalFilesDir("xcrash").toString())//存储目录。默认 Context. getFilesDir() + "/ tombstones"
+            .setLogFileMaintainDelayMs(1000));//在执行日志文件维护任务之前设置延迟（毫秒）。（默认值：5000）*/
+        //存储位置 /data/data/PACKAGE_NAME/files/tombstones
+        //异常类型 native java anr
     }
 
     /*@Override

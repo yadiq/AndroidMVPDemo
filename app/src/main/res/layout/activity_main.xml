@@ -1,20 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="ui.main.MainActivity">
 
-    <Button
-        android:id="@+id/btnMyRepos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/bg_button_login"
-        android:text="@string/my_repos"
-        android:textColor="@color/white"
-        android:textSize="16dp" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/catchExceptionButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:onClick="testCatchException_onClick"
+                android:padding="20dp"
+                android:text="catch exception"
+                android:textAllCaps="false"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/testJavaCrashInMainThreadButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:onClick="testJavaCrashInMainThread_onClick"
+                android:padding="20dp"
+                android:text="java crash"
+                android:textAllCaps="false"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/testNativeCrashInMainThreadButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:onClick="testNativeCrashInMainThread_onClick"
+                android:padding="20dp"
+                android:text="native crash"
+                android:textAllCaps="false"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/testAnrInputButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:onClick="testAnrInput_onClick"
+                android:padding="20dp"
+                android:text="ANR"
+                android:textAllCaps="false"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/uploadFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:onClick="uploadFile_onClick"
+                android:padding="20dp"
+                android:text="upload file"
+                android:textAllCaps="false"
+                tools:ignore="HardcodedText" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

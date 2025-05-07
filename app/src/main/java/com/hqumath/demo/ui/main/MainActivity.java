@@ -1,12 +1,22 @@
 package com.hqumath.demo.ui.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.databinding.ActivityMainBinding;
-import com.hqumath.demo.ui.repos.MyReposActivity;
+import com.hqumath.demo.utils.LogUtil;
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Map;
+
+import xcrash.TombstoneManager;
+import xcrash.TombstoneParser;
+import xcrash.XCrash;
 
 /**
  * ****************************************************************
@@ -27,12 +37,64 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        binding.btnMyRepos.setOnClickListener(v -> {
-            startActivity(new Intent(mContext, MyReposActivity.class));
-        });
     }
 
     @Override
     protected void initData() {
+    }
+
+    public void testCatchException_onClick(View view) {
+        try {
+            int a = 1 / 0;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            StringWriter stringWriter = new StringWriter();
+            e.printStackTrace(new PrintWriter(stringWriter, true));
+            LogUtil.d(stringWriter.toString());
+        }
+    }
+
+    public void testNativeCrashInMainThread_onClick(View view) {
+        XCrash.testNativeCrash(false);
+    }
+
+    public void testJavaCrashInMainThread_onClick(View view) {
+        XCrash.testJavaCrash(false);
+    }
+
+    public void testAnrInput_onClick(View view) {
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
+    public void uploadFile_onClick(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (File file : TombstoneManager.getAllTombstones()) {
+                    sendThenDeleteCrashLog(file.getAbsolutePath(), null);
+                }
+            }
+        }).start();
+    }
+
+    private void sendThenDeleteCrashLog(String logPath, String emergency) {
+        try {
+            //转为json
+            Map<String, String> map = TombstoneParser.parse(logPath, emergency);
+            String crashReport = new JSONObject(map).toString();
+            //发送到服务端
+            //...
+            LogUtil.d("字节数：" + crashReport.length());
+            LogUtil.d(crashReport);
+            //成功后删除
+            TombstoneManager.deleteTombstone(logPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

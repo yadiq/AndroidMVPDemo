@@ -38,8 +38,7 @@
         <activity
             android:name="com.hqumath.demo.ui.main.MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|navigation|keyboard|keyboardHidden|touchscreen|fontScale|locale"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
