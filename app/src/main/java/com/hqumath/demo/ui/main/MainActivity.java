@@ -47,7 +47,8 @@ public class MainActivity extends BaseActivity {
             int a = 1 / 0;
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtil.d(ExceptionUtil.ExceptionToString(e));
+            ExceptionUtil.logException("主动捕获异常", e);
+            //LogUtil.d(ExceptionUtil.ExceptionToString(e));
         }
     }
 
