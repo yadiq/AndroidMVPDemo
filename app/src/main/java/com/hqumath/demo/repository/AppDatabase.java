@@ -23,7 +23,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static class AppDataBaseHolder {
         private static final AppDatabase instance =
                 Room.databaseBuilder(CommonUtil.getContext(), AppDatabase.class, "basic.db")
-                        .fallbackToDestructiveMigration(true)//升级时丢弃原来表
+                        .fallbackToDestructiveMigration()//升级时丢弃原来表 true
                         .build();
     }
 

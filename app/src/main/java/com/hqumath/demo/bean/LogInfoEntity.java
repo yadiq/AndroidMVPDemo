@@ -50,6 +50,14 @@ public class LogInfoEntity {
         this.eventId = eventId;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getDeviceId() {
         return deviceId;
     }
