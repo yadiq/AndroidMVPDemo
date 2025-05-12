@@ -42,6 +42,10 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
     }
 
+    public void testAddInfo_onClick(View view) {
+        ExceptionUtil.logInfo("业务埋点", "信令：xxxx");
+    }
+
     public void testCatchException_onClick(View view) {
         try {
             int a = 1 / 0;

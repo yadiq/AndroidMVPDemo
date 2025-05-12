@@ -45,7 +45,16 @@ public class ExceptionUtil {
     }
 
     /**
-     * 记录主动捕获异常
+     * 记录业务埋点
+     * @param tag
+     * @param message
+     */
+    public static void logInfo(String tag, String message) {
+        insertLog(LogInfoEntity.Level.Info, tag, message);
+    }
+
+    /**
+     * 记录捕获的异常
      * @param tag
      * @param e
      */

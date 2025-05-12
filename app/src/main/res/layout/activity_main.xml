@@ -16,6 +16,17 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/addInfoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:onClick="testAddInfo_onClick"
+                android:padding="20dp"
+                android:text="add info"
+                android:textAllCaps="false"
+                tools:ignore="HardcodedText" />
+
+            <Button
                 android:id="@+id/catchExceptionButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
