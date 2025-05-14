@@ -3,14 +3,17 @@ package com.hqumath.demo.ui.main;
 import android.os.Bundle;
 import android.view.View;
 
+import com.hqumath.demo.app.AppExecutors;
 import com.hqumath.demo.base.BaseActivity;
+import com.hqumath.demo.bean.LogInfoEntity;
 import com.hqumath.demo.databinding.ActivityMainBinding;
-import com.hqumath.demo.utils.ExceptionUtil;
+import com.hqumath.demo.repository.AppDatabase;
+import com.hqumath.demo.utils.LogInfoUtil;
 import com.hqumath.demo.utils.LogUtil;
 
 import org.json.JSONObject;
 
-import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import xcrash.TombstoneManager;
@@ -43,7 +46,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void testAddInfo_onClick(View view) {
-        ExceptionUtil.logInfo("业务埋点", "信令：xxxx");
+        LogInfoUtil.logInfo("业务埋点", "信令：xxxx");
     }
 
     public void testCatchException_onClick(View view) {
@@ -51,7 +54,7 @@ public class MainActivity extends BaseActivity {
             int a = 1 / 0;
         } catch (Exception e) {
             e.printStackTrace();
-            ExceptionUtil.logException("主动捕获异常", e);
+            LogInfoUtil.logException("主动捕获异常", e);
             //LogUtil.d(ExceptionUtil.ExceptionToString(e));
         }
     }
@@ -73,15 +76,27 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    //上传文件
     public void uploadFile_onClick(View view) {
-        new Thread(new Runnable() {
+        AppExecutors.getInstance().workThread().execute(() -> {
+            //读数据库
+            List<LogInfoEntity> list =  AppDatabase.getInstance().logInfoDao().getAll();
+            //转为jsonStr上传
+            //...
+            //上传成功，删除数据
+            AppDatabase.getInstance().logInfoDao().deleteAll(list);
+        });
+
+        //同理
+        //读取异常文件，转为jsonStr上传，上传成功删除
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 for (File file : TombstoneManager.getAllTombstones()) {
                     sendThenDeleteCrashLog(file.getAbsolutePath(), null);
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     private void sendThenDeleteCrashLog(String logPath, String emergency) {

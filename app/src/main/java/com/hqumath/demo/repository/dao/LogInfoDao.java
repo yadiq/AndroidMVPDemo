@@ -35,14 +35,14 @@ public interface LogInfoDao {
     @Delete
     void delete(LogInfoEntity info);
 
+    @Delete
+    void deleteAll(List<LogInfoEntity> list);
+
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    void insertAll(List<LogInfoEntity> entity);
 
 //    @Update(onConflict = OnConflictStrategy.REPLACE)
 //    void updateAll(List<UserInfoEntity> entity);
-//
-//    @Delete
-//    void deleteAll(List<UserInfoEntity> entity);
 
 //    @Query("delete from user_info")
 //    void deleteAll();

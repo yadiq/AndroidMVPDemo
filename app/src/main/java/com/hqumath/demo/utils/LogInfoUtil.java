@@ -18,31 +18,9 @@ import java.util.Date;
  * 注意事项:
  * ****************************************************************
  */
-public class ExceptionUtil {
-
+public class LogInfoUtil {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-
-    /**
-     * Exception转String
-     * @param e
-     * @return
-     */
-    public static String ExceptionToString(Exception e) {
-        /*StringWriter writer = new StringWriter();
-        e.printStackTrace(new PrintWriter(writer, true));
-        return writer.toString();*/
-        Writer writer = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(writer);
-        e.printStackTrace(printWriter);
-        Throwable cause = e.getCause();
-        while (cause != null) {
-            cause.printStackTrace(printWriter);
-            cause = cause.getCause();
-        }
-        printWriter.close();
-        return writer.toString();
-    }
 
     /**
      * 记录业务埋点
@@ -76,5 +54,26 @@ public class ExceptionUtil {
             //插入到数据库
             AppDatabase.getInstance().logInfoDao().insert(info);
         });
+    }
+
+    /**
+     * Exception转String
+     * @param e
+     * @return
+     */
+    private static String ExceptionToString(Exception e) {
+        /*StringWriter writer = new StringWriter();
+        e.printStackTrace(new PrintWriter(writer, true));
+        return writer.toString();*/
+        Writer writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(writer);
+        e.printStackTrace(printWriter);
+        Throwable cause = e.getCause();
+        while (cause != null) {
+            cause.printStackTrace(printWriter);
+            cause = cause.getCause();
+        }
+        printWriter.close();
+        return writer.toString();
     }
 }
