@@ -7,8 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--权限获取库-->
     <permission-group android:name="${applicationId}.andpermission" />
-    <!--前台服务类型：远程消息传递-->
+    <!--前台服务类型：远程消息传递。从API 34开始，有前台服务类型-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
 
     <application
         android:name="com.hqumath.demo.app.App"
@@ -57,6 +58,7 @@
 
         <service
             android:name="com.hqumath.demo.service.UpdateService"
+            android:foregroundServiceType="remoteMessaging"
             android:exported="false">
         </service>
 

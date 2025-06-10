@@ -31,11 +31,13 @@ public class MainActivity extends BaseActivity {
     protected void initListener() {
         binding.btnMyRepos.setOnClickListener(v -> {
             //startActivity(new Intent(mContext, MyReposActivity.class));
+
+
             Intent service = new Intent(mContext, UpdateService.class);
-            startService(service);
+            //startService(service);
             //启动一个前台服务 在api大于26才可使用startForegroundService此方法
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(service);
+                startForegroundService(service);//TODO 版本限制？
             }else{
                 startService(service);
             }
