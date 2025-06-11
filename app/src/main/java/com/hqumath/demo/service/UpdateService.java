@@ -10,12 +10,20 @@ import android.os.Build;
 import android.os.IBinder;
 
 import com.hqumath.demo.R;
+import com.hqumath.demo.app.AppExecutors;
+import com.hqumath.demo.utils.LogUtil;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 版本更新 服务
  */
 
 public class UpdateService extends Service {
+    public Disposable sDisposable;
 
     public UpdateService() {
     }
@@ -53,6 +61,18 @@ public class UpdateService extends Service {
         } else {
             startForeground(NOTIFICATION_ID, notification);
         }
+
+        //定时器
+        sDisposable = Observable
+                .interval(1, TimeUnit.SECONDS)
+                //取消任务时取消定时唤醒
+                .doOnDispose(() -> {
+                    LogUtil.d("doOnDispose");
+                })
+                .subscribe(count -> {
+                    LogUtil.d("subscribe count=" + count);
+                });
+
         //return START_STICKY;
         return super.onStartCommand(intent, flags, startId);
     }
@@ -65,6 +85,9 @@ public class UpdateService extends Service {
 
     @Override
     public void onDestroy() {
+        if (sDisposable != null) {
+            sDisposable.dispose();
+        }
         stopForeground(true);//取消前台运行状态
         super.onDestroy();
     }
