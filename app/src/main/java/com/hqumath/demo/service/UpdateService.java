@@ -1,6 +1,8 @@
 package com.hqumath.demo.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
@@ -27,7 +29,11 @@ public class UpdateService extends Service {
         //构建Notification
         Notification.Builder notificationBuilder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationBuilder = new Notification.Builder(this, "channelId1");
+            //创建通知渠道
+            String CHANNEL_ID = "channelId1";
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "channelName1", NotificationManager.IMPORTANCE_DEFAULT);
+            getSystemService(NotificationManager.class).createNotificationChannel(notificationChannel);
+            notificationBuilder = new Notification.Builder(this, CHANNEL_ID);
         } else {
             notificationBuilder = new Notification.Builder(this);
         }
