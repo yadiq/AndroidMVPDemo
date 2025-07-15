@@ -7,6 +7,7 @@ import android.view.View;
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.databinding.ActivityMainBinding;
 import com.hqumath.demo.ui.repos.MyReposActivity;
+import com.hqumath.demo.utils.CommonUtil;
 
 /**
  * ****************************************************************
@@ -34,5 +35,17 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
+    }
+
+    private void login() {
+        String serverIP = "192.168.1.22";
+        String serverPort = "9999";
+        String userName = "1003";//1002(济南) 1003(菏泽)
+        String userPwd = "123456";
+//        val result = JNIBridge.groupTalkInit(serverIP, serverPort.toInt(), userName, userPwd);
+//        if (result == -1) {
+//            CommonUtil.toast("登录中，请稍后...");
+//        }
     }
 }

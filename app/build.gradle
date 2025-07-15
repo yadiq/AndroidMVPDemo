@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
 }
 
 android {
@@ -22,6 +23,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions{
+        jvmTarget = JavaVersion.VERSION_1_8
     }
     //配置自定义打包名称
     applicationVariants.all { variant ->
@@ -59,4 +63,9 @@ dependencies {
     //下拉刷新
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    //implementation "androidx.preference:preference-ktx:1.1.1"
+
 }

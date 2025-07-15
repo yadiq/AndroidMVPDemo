@@ -1,4 +1,6 @@
 buildscript {
+    ext.kotlin_version = '1.9.0' //kotlin版本
+
     repositories {
         //阿里云云效 Maven https://developer.aliyun.com/mvn/guide
         maven { url 'https://maven.aliyun.com/repository/public' }//central仓和jcenter仓的聚合仓 源地址 https://repo1.maven.org/maven2/ http://jcenter.bintray.com/
@@ -9,6 +11,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.3.1")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
