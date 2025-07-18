@@ -24,7 +24,7 @@ AndroidMVP的精简版本，快速开发框架
 
 2. AGP与Gradle、JDK 的版本对应关系
 + AGP           最小Gradle  最小JDK
-+ 8.4	            8.6	    17
++ 8.4	            8.6	    17 #当前选择 AGP8.4.0 Gradle8.7 JDK17 Kotlin1.9.22
 + 8.3	            8.4   	17
 + 8.2            	8.2	    17
 + 8.1	            8.0	    17
