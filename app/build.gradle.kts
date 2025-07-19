@@ -5,17 +5,16 @@ plugins {
 }
 
 android {
-    namespace 'com.hqumath.demo' //影响R类生成
+    namespace = "com.hqumath.demo" //影响R类生成
     compileSdk = 31
 
     defaultConfig {
-        applicationId "com.hqumath.demo" //影响AndroidManifest中package
+        applicationId = "com.hqumath.demo" //影响AndroidManifest中package
         minSdk = 21
         //noinspection ExpiredTargetSdkVersion
-        targetSdk 31
-        versionCode 20210902
-        versionName "2.1"
-        //multiDexEnabled true
+        targetSdk = 31
+        versionCode = 20210902
+        versionName = "2.1"
     }
 
     buildTypes {
@@ -35,6 +34,7 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
+        buildConfig = true
         viewBinding = true
 //        compose = true
     }
@@ -51,7 +51,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+//    implementation(libs.androidx.core.ktx) //Kotlin 扩展库
 //    implementation(libs.androidx.lifecycle.runtime.ktx)
 //    implementation(libs.androidx.activity.compose)
 //    implementation(platform(libs.androidx.compose.bom))
@@ -67,25 +67,25 @@ dependencies {
 //    debugImplementation(libs.androidx.ui.tooling)
 //    debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.4.2'//多语言切换需1.3.0及以上版本
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("androidx.appcompat:appcompat:1.4.2") // 多语言切换需1.3.0及以上版本
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:1.6.1")
     //rxjava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation("io.reactivex.rxjava2:rxjava:2.2.9")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     //network
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'//返回数据转换器-Gson
-    //implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'//返回数据转换器-String
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//网络请求适配器
+    implementation("com.squareup.okhttp3:okhttp:3.12.1")
+    implementation("com.squareup.retrofit2:retrofit:2.5.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.4.0")//返回数据转换器-Gson
+    //implementation("com.squareup.retrofit2:converter-scalars:2.4.0")//返回数据转换器-String
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.4.0")//网络请求适配器
     //权限获取
-    implementation 'com.yanzhenjie:permission:2.0.3'
+    implementation("com.yanzhenjie:permission:2.0.3")
     //屏幕适配
-    implementation 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
+    implementation("com.github.JessYanCoding:AndroidAutoSize:v1.2.1")
     //下拉刷新
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+    implementation("com.scwang.smart:refresh-layout-kernel:2.0.3")      //核心必须依赖
+    implementation("com.scwang.smart:refresh-header-classics:2.0.3")    //经典刷新头
 }
