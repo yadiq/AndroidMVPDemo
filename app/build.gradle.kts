@@ -51,7 +51,10 @@ android {
 }
 
 dependencies {
-//    implementation(libs.androidx.core.ktx) //Kotlin 扩展库
+    implementation(libs.androidx.core.ktx) //Kotlin 扩展库
+    implementation(libs.androidx.appcompat) //多语言切换需1.3.0及以上版本
+    implementation(libs.material)
+
 //    implementation(libs.androidx.lifecycle.runtime.ktx)
 //    implementation(libs.androidx.activity.compose)
 //    implementation(platform(libs.androidx.compose.bom))
@@ -67,11 +70,9 @@ dependencies {
 //    debugImplementation(libs.androidx.ui.tooling)
 //    debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("androidx.appcompat:appcompat:1.4.2") //多语言切换需1.3.0及以上版本
+    //implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("com.google.android.material:material:1.6.1")
     //rxjava
     implementation("io.reactivex.rxjava2:rxjava:2.2.9")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
