@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.hqumath.demo" //影响AndroidManifest中package
-        minSdk 21
+        minSdk 26
         //noinspection ExpiredTargetSdkVersion
         targetSdk 33
         versionCode 20210902
@@ -68,4 +68,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //implementation "androidx.preference:preference-ktx:1.1.1"
 
+    //读写 Excel 文件
+    implementation 'org.apache.poi:poi:5.2.3'
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    // 为了压缩体积，可以再加一个 xmlbeans-lite 代替完整版
+    implementation 'org.apache.xmlbeans:xmlbeans:5.1.1'
 }

@@ -1,12 +1,11 @@
 package com.hqumath.demo.ui.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.hqumath.demo.base.BaseActivity;
 import com.hqumath.demo.databinding.ActivityMainBinding;
-import com.hqumath.demo.ui.repos.MyReposActivity;
+import com.hqumath.demo.utils.ExcelUtils;
 
 /**
  * ****************************************************************
@@ -27,8 +26,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        binding.btnMyRepos.setOnClickListener(v -> {
-            startActivity(new Intent(mContext, MyReposActivity.class));
+        binding.btnWrite.setOnClickListener(v -> {
+            ExcelUtils.writeExcel(mContext);
+        });
+
+        binding.btnRead.setOnClickListener(v -> {
+            ExcelUtils.readExcel(mContext);
         });
     }
 
