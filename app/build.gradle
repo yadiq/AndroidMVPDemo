@@ -68,9 +68,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //implementation "androidx.preference:preference-ktx:1.1.1"
 
-    //读写 Excel 文件
-    implementation 'org.apache.poi:poi:5.2.3'
-    implementation 'org.apache.poi:poi-ooxml:5.2.3'
-    // 为了压缩体积，可以再加一个 xmlbeans-lite 代替完整版
-    implementation 'org.apache.xmlbeans:xmlbeans:5.1.1'
+    //读写 Excel 文件。需要minSdkVersion 26
+    implementation("org.apache.poi:poi:5.2.3") //Apache POI 核心库。.xls文件支持
+    implementation("org.apache.poi:poi-ooxml:5.2.3") //完整的 .xlsx 文件支持
+    implementation("org.apache.xmlbeans:xmlbeans:5.1.1") //处理 OOXML 格式的 XML 解析和生成。现代 Excel 文件（.xlsx）基于 XML 格式
 }
